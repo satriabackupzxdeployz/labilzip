@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Tools - HOOPSTEAM ULTIMATE</title>
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/tools.css">
+    <style>
+        .network-tool {
+            background: #1e1e2e;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid #4cc9f0;
+        }
+        
+        .result-panel {
+            background: #2d2d44;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            border: 1px solid #4361ee;
+        }
+        
+        .header-item {
+            background: #3a3a5d;
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        
+        .header-name {
+            color: #4cc9f0;
+            font-weight: bold;
+        }
+        
+        .header-value {
+            color: #f72585;
+        }
+        
+        .vulnerability {
+            background: #3a0ca3;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border-left: 4px solid #f72585;
+        }
+        
+        .security-good {
+            color: #4ade80;
+        }
+        
+        .security-warning {
+            color: #fbbf24;
+        }
+        
+        .security-bad {
+            color: #f87171;
+        }
+        
+        .hop-row {
+            display: flex;
+            align-items: center;
+            padding: 5px;
+            border-bottom: 1px solid #4361ee;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        
+        .hop-number {
+            width: 40px;
+            color: #4cc9f0;
+        }
+        
+        .hop-ip {
+            width: 150px;
+            color: #f72585;
+        }
+        
+        .hop-times {
+            flex: 1;
+            color: #b5179e;
+        }
+        
+        .port-status-open {
+            color: #4ade80;
+        }
+        
+        .port-status-closed {
+            color: #f87171;
+        }
+        
+        .port-status-filtered {
+            color: #fbbf24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌐 Network Analysis Tools</h1>
+        <p class="subtitle">Professional network diagnostics and security analysis</p>
+        
+        <!-- DNS Lookup Tool -->
+        <div class="network-tool">
+            <h2>🔍 DNS Lookup & Recon</h2>
+            <p>Query DNS records and discover network information</p>
+            
+            <div class="form-group">
+                <label>Domain:</label>
+                <input type="text" id="dnsDomain" placeholder="example.com" class="form-control">
+            </div>
+            
+            <div class="form-group">
+                <label>Record Types:</label>
+                <select id="dnsTypes" multiple class="form-control" style="height: 120px;">
+                    <option value="A" selected>A (Address)</option>
+                    <option value="AAAA" selected>AAAA (IPv6 Address)</option>
+                    <option value="CNAME" selected>CNAME (Canonical Name)</option>
+                    <option value="MX" selected>MX (Mail Exchange)</option>
+                    <option value="TXT" selected>TXT (Text)</option>
+                    <option value="NS" selected>NS (Name Server)</option>
+                    <option value="SOA">SOA (Start of Authority)</option>
+                    <option value="PTR">PTR (Pointer)</option>
+                    <option value="SRV">SRV (Service)</option>
+                    <option value="CAA">CAA (Certification Authority)</option>
+                </select>
+            </div>
+            
+            <div class="button-group">
+                <button class="btn btn-primary" onclick="dnsLookup()">🔍 DNS Lookup</button>
+                <button class="btn btn-info" onclick="findSubdomains()">🔍 Find Subdomains</button>
+                <button class="btn btn-warning" onclick="reverseDNS()">🔄 Reverse DNS</button>
+                <button class="btn btn-danger" onclick="dnsReport()">📊 Generate Report</button>
+            </div>
+            
+            <div id="dnsResults"></div>
+        </div>
+        
+        <!-- SSL Checker -->
+        <div class="network-tool">
+            <h2>🔐 SSL/TLS Security Checker</h2>
+            <p>Analyze SSL certificates and security configuration</p>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Domain:</label>
+                    <input type="text" id="sslDomain" placeholder="example.com" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <label>Port:</label>
+                    <input type="number" id="sslPort" value="443" class="form-control">
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <button class="btn btn-primary" onclick="sslCheck()">🔍 Check SSL</button>
+                <button class="btn btn-info" onclick="checkProtocols()">📡 Check Protocols</button>
+                <button class="btn btn-warning" onclick="scanVulnerabilities()">⚠️ Scan Vulnerabilities</button>
+                <button class="btn btn-danger" onclick="sslReport()">📊 Security Report</button>
+            </div>
+            
+            <div id="sslResults"></div>
+        </div>
+        
+        <!-- Ping & Traceroute -->
+        <div class="network-tool">
+            <h2>📶 Ping & Traceroute</h2>
+            <p>Network diagnostics and path analysis</p>
+            
+            <div class="form-group">
+                <label>Host / IP:</label>
+                <input type="text" id="networkHost" placeholder="example.com or 8.8.8.8" class="form-control">
+            </div>
+            
+            <div class="button-group">
+                <button class="btn btn-primary" onclick="pingHost()">📡 Ping</button>
+                <button class="btn btn-info" onclick="traceroute()">🛤️ Traceroute</button>
+                <button class="btn btn-warning" onclick="portScan()">🔍 Port Scan</button>
+                <button class="btn btn-danger" onclick="networkReport()">📊 Network Report</button>
+            </div>
+            
+            <div id="networkResults"></div>
+        </div>
+        
+        <!-- HTTP Header Analyzer -->
+        <div class="network-tool">
+            <h2>🌐 HTTP Header Analyzer</h2>
+            <p>Analyze HTTP headers and security configuration</p>
+            
+            <div class="form-group">
+                <label>URL:</label>
+                <input type="url" id="headerUrl" placeholder="https://example.com" class="form-control">
+            </div>
+            
+            <div class="button-group">
+                <button class="btn btn-primary" onclick="analyzeHeaders()">🔍 Analyze Headers</button>
+                <button class="btn btn-info" onclick="checkSecurity()">🛡️ Security Check</button>
+                <button class="btn btn-warning" onclick="compareHeaders()">🔄 Compare</button>
+                <button class="btn btn-danger" onclick="headerReport()">📊 Header Report</button>
+            </div>
+            
+            <div id="headerResults"></div>
+        </div>
+        
+        <!-- Bulk Network Scan -->
+        <div class="network-tool">
+            <h2>📦 Bulk Network Operations</h2>
+            <p>Scan multiple targets simultaneously</p>
+            
+            <div class="form-group">
+                <label>Targets (one per line):</label>
+                <textarea id="bulkNetworkTargets" class="form-control" rows="4" placeholder="example.com
+192.168.1.1
+google.com
+8.8.8.8"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>Operation:</label>
+                <select id="bulkNetworkOp" class="form-control">
+                    <option value="ping">Ping</option>
+                    <option value="dns">DNS Lookup</option>
+                    <option value="ssl">SSL Check</option>
+                    <option value="headers">Header Analysis</option>
+                </select>
+            </div>
+            
+            <div class="button-group">
+                <button class="btn btn-primary" onclick="bulkNetworkScan()">🚀 Start Bulk Scan</button>
+                <button class="btn btn-warning" onclick="clearBulkNetwork()">🗑️ Clear</button>
+                <button class="btn btn-info" onclick="exportNetworkResults()">📤 Export Results</button>
+            </div>
+            
+            <div id="bulkNetworkResults"></div>
+        </div>
+        
+        <!-- Results Dashboard -->
+        <div class="network-tool">
+            <h2>📊 Network Intelligence Dashboard</h2>
+            <div id="networkDashboard">
+                <p>Network analysis results will appear here...</p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="../../js/tools/07-network-tools/dns-lookup.js"></script>
+    <script src="../../js/tools/07-network-tools/ssl-checker.js"></script>
+    <script src="../../js/tools/07-network-tools/ping-traceroute.js"></script>
+    <script src="../../js/tools/07-network-tools/http-header.js"></script>
+    
+    <script>
+        let dnsLookupTool = new DNSLookup();
+        let sslChecker = new SSLChecker();
+        let networkDiagnostics = new NetworkDiagnostics();
+        let headerAnalyzer = new HTTPHeaderAnalyzer();
+        
+        // DNS Functions
+        async function dnsLookup() {
+            const domain = document.getElementById('dnsDomain').value;
+            const typeSelect = document.getElementById('dnsTypes');
+            const types = Array.from(typeSelect.selectedOptions).map(opt => opt.value);
+            
+            if (!domain) {
+                alert('Enter domain');
+                return;
+            }
+            
+            showLoading('dnsResults', 'Querying DNS records...');
+            
+            try {
+                const results = await dnsLookupTool.lookup(domain, types);
+                displayDNSResults(results);
+            } catch (error) {
+                showError('dnsResults', error.message);
+            }
+        }
+        
+        async function findSubdomains() {
+            const domain = document.getElementById('dnsDomain').value;
+            showLoading('dnsResults', 'Finding subdomains...');
+            
+            const subdomains = await dnsLookupTool.findSubdomains(domain);
+            displaySubdomains(subdomains);
+        }
+        
+        async function reverseDNS() {
+            const ip = document.getElementById('dnsDomain').value;
+            showLoading('dnsResults', 'Performing reverse DNS lookup...');
+            
+            const result = await dnsLookupTool.reverseLookup(ip);
+            displayReverseDNS(result);
+        }
+        
+        async function dnsReport() {
+            const domain = document.getElementById('dnsDomain').value;
+            showLoading('dnsResults', 'Generating DNS report...');
+            
+            const report = await dnsLookupTool.generateReport(domain);
+            downloadJSON(report, `dns-report-${domain}.json`);
+            showSuccess('dnsResults', 'DNS report downloaded!');
+        }
+        
+        // SSL Functions
+        async function sslCheck() {
+            const domain = document.getElementById('sslDomain').value;
+            const port = parseInt(document.getElementById('sslPort').value) || 443;
+            
+            if (!domain) {
+                alert('Enter domain');
+                return;
+            }
+            
+            showLoading('sslResults', 'Checking SSL configuration...');
+            
+            try {
+                const results = await sslChecker.check(domain, port);
+                displaySSLResults(results);
+            } catch (error) {
+                showError('sslResults', error.message);
+            }
+        }
+        
+        async function checkProtocols() {
+            const domain = document.getElementById('sslDomain').value;
+            const port = parseInt(document.getElementById('sslPort').value) || 443;
+            
+            showLoading('sslResults', 'Checking supported protocols...');
+            
+            const protocols = await sslChecker.checkProtocols(domain, port);
+            displayProtocols(protocols);
+        }
+        
+        async function scanVulnerabilities() {
+            const domain = document.getElementById('sslDomain').value;
+            const port = parseInt(document.getElementById('sslPort').value) || 443;
+            
+            showLoading('sslResults', 'Scanning for vulnerabilities...');
+            
+            const vulnerabilities = await sslChecker.scanVulnerabilities(domain, port);
+            displayVulnerabilities(vulnerabilities);
+        }
+        
+        async function sslReport() {
+            const domain = document.getElementById('sslDomain').value;
+            showLoading('sslResults', 'Generating SSL security report...');
+            
+            const report = await sslChecker.generateReport(domain);
+            downloadJSON(report, `ssl-report-${domain}.json`);
+            showSuccess('sslResults', 'SSL report downloaded!');
+        }
+        
+        // Network Diagnostics Functions
+        async function pingHost() {
+            const host = document.getElementById('networkHost').value;
+            
+            if (!host) {
+                alert('Enter host or IP');
+                return;
+            }
+            
+            showLoading('networkResults', `Pinging ${host}...`);
+            
+            try {
+                const results = await networkDiagnostics.ping(host);
+                displayPingResults(results);
+            } catch (error) {
+                showError('networkResults', error.message);
+            }
+        }
+        
+        async function traceroute() {
+            const host = document.getElementById('networkHost').value;
+            showLoading('networkResults', `Tracing route to ${host}...`);
+            
+            const results = await networkDiagnostics.traceroute(host);
+            displayTracerouteResults(results);
+        }
+        
+        async function portScan() {
+            const host = document.getElementById('networkHost').value;
+            showLoading('networkResults', `Scanning ports on ${host}...`);
+            
+            const results = await networkDiagnostics.portScan(host);
+            displayPortScanResults(results);
+        }
+        
+        async function networkReport() {
+            const host = document.getElementById('networkHost').value;
+            showLoading('networkResults', 'Generating comprehensive network report...');
+            
+            const report = await networkDiagnostics.generateNetworkReport(host);
+            downloadJSON(report, `network-report-${host}.json`);
+            showSuccess('networkResults', 'Network report downloaded!');
+        }
+        
+        // HTTP Header Functions
+        async function analyzeHeaders() {
+            const url = document.getElementById('headerUrl').value;
+            
+            if (!url) {
+                alert('Enter URL');
+                return;
+            }
+            
+            showLoading('headerResults', 'Analyzing HTTP headers...');
+            
+            try {
+                const results = await headerAnalyzer.analyze(url);
+                displayHeaderResults(results);
+            } catch (error) {
+                showError('headerResults', error.message);
+            }
+        }
+        
+        async function checkSecurity() {
+            const url = document.getElementById('headerUrl').value;
+            showLoading('headerResults', 'Checking security headers...');
+            
+            const headers = await headerAnalyzer.fetchHeaders(url);
+            const security = headerAnalyzer.analyzeSecurityHeaders(headers);
+            displaySecurityAnalysis(security);
+        }
+        
+        async function compareHeaders() {
+            const url1 = prompt('Enter first URL:', 'https://example.com');
+            const url2 = prompt('Enter second URL:', 'https://google.com');
+            
+            if (!url1 || !url2) return;
+            
+            showLoading('headerResults', 'Comparing HTTP headers...');
+            
+            const comparison = await headerAnalyzer.compareHeaders(url1, url2);
+            displayHeaderComparison(comparison);
+        }
+        
+        async function headerReport() {
+            const url = document.getElementById('headerUrl').value;
+            showLoading('headerResults', 'Generating header analysis report...');
+            
+            const report = await headerAnalyzer.generateReport(url);
+            downloadJSON(report, `header-report-${new URL(url).hostname}.json`);
+            showSuccess('headerResults', 'Header report downloaded!');
+        }
+        
+        // Bulk Operations
+        async function bulkNetworkScan() {
+            const targetsText = document.getElementById('bulkNetworkTargets').value;
+            const operation = document.getElementById('bulkNetworkOp').value;
+            
+            if (!targetsText) {
+                alert('Enter targets');
+                return;
+            }
+            
+            const targets = targetsText.split('\n').filter(t => t.trim());
+            showLoading('bulkNetworkResults', `Scanning ${targets.length} targets...`);
+            
+            const results = [];
+            
+            for (let target of targets) {
+                try {
+                    let result;
+                    
+                    switch(operation) {
+                        case 'ping':
+                            result = await networkDiagnostics.ping(target);
+                            break;
+                        case 'dns':
+                            result = await dnsLookupTool.lookup(target);
+                            break;
+                        case 'ssl':
+                            result = await sslChecker.check(target);
+                            break;
+                        case 'headers':
+                            result = await headerAnalyzer.analyze(target);
+                            break;
+                    }
+                    
+                    results.push({ target: target, result: result });
+                    
+                    // Update progress
+                    updateBulkProgress(results.length, targets.length);
+                    
+                } catch (error) {
+                    results.push({ target: target, error: error.message });
+                }
+                
+                // Rate limiting
+                await sleep(1000);
+            }
+            
+            displayBulkNetworkResults(results, operation);
+        }
+        
+        function clearBulkNetwork() {
+            document.getElementById('bulkNetworkTargets').value = '';
+            document.getElementById('bulkNetworkResults').innerHTML = '';
+        }
+        
+        function exportNetworkResults() {
+            const format = prompt('Export format (json/csv):', 'json');
+            if (format) {
+                const resultsText = document.getElementById('bulkNetworkResults').innerText;
+                downloadData(resultsText, `network-results.${format}`, format);
+            }
+        }
+        
+        // Display Functions
+        function displayDNSResults(results) {
+            let html = `
+                <div class="result-panel">
+                    <h3>🔍 DNS Lookup Results: ${results.domain}</h3>
+                    <p><small>${results.timestamp}</small></p>
+            `;
+            
+            for (const [type, records] of Object.entries(results.records)) {
+                html += `<h4>${type} Records:</h4>`;
+                records.forEach(recor
