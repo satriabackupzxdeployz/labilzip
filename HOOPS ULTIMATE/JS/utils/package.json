@@ -1,0 +1,32 @@
+{
+  "name": "hoopsteam-ultimate",
+  "version": "1.0.0",
+  "description": "Cybersecurity Toolkit - All-in-One Security Platform",
+  "main": "index.html",
+  "scripts": {
+    "start": "http-server -p 3000",
+    "build": "echo 'Build process would go here'",
+    "test": "echo 'Test process would go here'"
+  },
+  "dependencies": {
+    "crypto-js": "^4.1.1",
+    "jszip": "^3.10.1",
+    "file-saver": "^2.0.5",
+    "chart.js": "^4.4.0",
+    "qrcode": "^1.5.3"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "eslint": "^8.56.0"
+  },
+  "keywords": [
+    "cybersecurity",
+    "pentesting",
+    "tools",
+    "security",
+    "hacking"
+  ],
+  "author": "Your Name",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "private": true
+}
