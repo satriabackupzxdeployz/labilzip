@@ -1,0 +1,269 @@
+<!-- SIMPAN SEBAGAI botnet.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GhostNet • HOOPSXTEAM</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .terminal {
+            background: #000;
+            font-family: 'Courier New', monospace;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--hoops-green);
+            height: 300px;
+            overflow-y: auto;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .pulse { animation: pulse 2s infinite; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <div style="width: 32px; height: 32px; background: linear-gradient(90deg, var(--hoops-dark), var(--hoops-green)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+                    HX
+                </div>
+                <span style="font-size: 1.25rem; font-weight: 700;">
+                    HOOPSXTEAM • <span class="text-gradient">GHOSTNET</span>
+                </span>
+            </div>
+            <div style="display: flex; gap: 2rem; align-items: center;">
+                <a href="dashboard.html" style="color: var(--text-secondary); text-decoration: none;">
+                    <i class="fas fa-arrow-left mr-2"></i>Back to Dashboard
+                </a>
+                <div class="hoops-tag">v2.5 ACTIVE</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Header -->
+            <div style="margin-bottom: 2rem;">
+                <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">GhostNet Control Panel</h1>
+                <p style="color: var(--text-secondary);">HOOPSXTEAM Botnet Management System</p>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-4" style="margin-bottom: 2rem;">
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div id="nodeCount" style="font-size: 2rem; font-weight: bold;">1,247</div>
+                            <div style="color: var(--text-secondary);">Active Nodes</div>
+                        </div>
+                        <div style="color: var(--hoops-green); font-size: 1.5rem;">
+                            <i class="fas fa-server"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div id="hashRate" style="font-size: 2rem; font-weight: bold;">18.4K</div>
+                            <div style="color: var(--text-secondary);">Hash Rate</div>
+                        </div>
+                        <div style="color: #00ccff; font-size: 1.5rem;">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-size: 2rem; font-weight: bold;">100%</div>
+                            <div style="color: var(--text-secondary);">Uptime</div>
+                        </div>
+                        <div style="color: #00ff88; font-size: 1.5rem;">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-size: 2rem; font-weight: bold;">0</div>
+                            <div style="color: var(--text-secondary);">Detections</div>
+                        </div>
+                        <div style="color: #8b5cf6; font-size: 1.5rem;">
+                            <i class="fas fa-eye-slash"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botnet Controls -->
+            <div class="grid" style="grid-template-columns: 2fr 1fr; gap: 2rem;">
+                <div>
+                    <div class="card" style="margin-bottom: 1.5rem;">
+                        <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">Node Management</h2>
+                        <div id="nodeList">
+                            <!-- Nodes loaded by JS -->
+                        </div>
+                        <button class="btn btn-primary" onclick="deployNode()" style="margin-top: 1rem;">
+                            <i class="fas fa-plus"></i> Deploy New Node
+                        </button>
+                    </div>
+
+                    <div class="card">
+                        <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">Quick Actions</h2>
+                        <div class="grid grid-cols-4" style="gap: 1rem; margin-bottom: 1.5rem;">
+                            <button class="btn-secondary" onclick="launchAttack('ddos')" style="padding: 1rem; text-align: center;">
+                                <div style="font-size: 1.5rem;">⚡</div>
+                                <div>DDoS</div>
+                            </button>
+                            <button class="btn-secondary" onclick="launchAttack('mining')" style="padding: 1rem; text-align: center;">
+                                <div style="font-size: 1.5rem;">💰</div>
+                                <div>Mining</div>
+                            </button>
+                            <button class="btn-secondary" onclick="launchAttack('harvest')" style="padding: 1rem; text-align: center;">
+                                <div style="font-size: 1.5rem;">🔑</div>
+                                <div>Harvest</div>
+                            </button>
+                            <button class="btn-secondary" onclick="launchAttack('deploy')" style="padding: 1rem; text-align: center;">
+                                <div style="font-size: 1.5rem;">📦</div>
+                                <div>Deploy</div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="card">
+                        <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">Command Terminal</h2>
+                        <div class="terminal" id="terminal">
+                            <div style="color: var(--hoops-green);">[HOOPSXTEAM]$</div>
+                            <div style="color: white;">GhostNet v2.5 Ready</div>
+                            <div style="margin-top: 1rem;">
+                                <span style="color: var(--hoops-green);">[HOOPSXTEAM]$</span>
+                                <span style="color: white; margin-left: 0.5rem;" id="cursor">█</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- JavaScript -->
+    <script>
+        // Botnet Engine
+        class GhostNet {
+            constructor() {
+                this.nodes = [];
+                this.initNodes();
+                this.updateDisplay();
+            }
+            
+            initNodes() {
+                for (let i = 1; i <= 5; i++) {
+                    this.nodes.push({
+                        id: `HX-NODE-${i.toString().padStart(3, '0')}`,
+                        type: ['SERVER', 'IoT', 'MOBILE'][Math.floor(Math.random() * 3)],
+                        status: 'ACTIVE'
+                    });
+                }
+            }
+            
+            deployNode() {
+                const newNode = {
+                    id: `HX-NODE-${(this.nodes.length + 1).toString().padStart(3, '0')}`,
+                    type: ['SERVER', 'IoT', 'MOBILE', 'ROUTER'][Math.floor(Math.random() * 4)],
+                    status: 'ACTIVE'
+                };
+                this.nodes.push(newNode);
+                this.log(`✅ Node ${newNode.id} deployed`);
+                this.updateDisplay();
+            }
+            
+            launchAttack(type) {
+                const attacks = {
+                    'ddos': { name: 'DDoS Attack', icon: '⚡' },
+                    'mining': { name: 'Cryptojacking', icon: '💰' },
+                    'harvest': { name: 'Credential Harvest', icon: '🔑' },
+                    'deploy': { name: 'Payload Deployment', icon: '📦' }
+                };
+                const attack = attacks[type];
+                this.log(`🚀 ${attack.icon} ${attack.name} launched`);
+            }
+            
+            log(message) {
+                const terminal = document.getElementById('terminal');
+                const time = new Date().toLocaleTimeString();
+                const logEntry = document.createElement('div');
+                logEntry.style.color = '#00ff88';
+                logEntry.textContent = `[${time}] ${message}`;
+                terminal.appendChild(logEntry);
+                terminal.scrollTop = terminal.scrollHeight;
+            }
+            
+            updateDisplay() {
+                // Update node count
+                document.getElementById('nodeCount').textContent = this.nodes.length;
+                
+                // Update node list
+                const nodeList = document.getElementById('nodeList');
+                nodeList.innerHTML = '';
+                
+                this.nodes.forEach(node => {
+                    const nodeEl = document.createElement('div');
+                    nodeEl.style.display = 'flex';
+                    nodeEl.style.justifyContent = 'space-between';
+                    nodeEl.style.alignItems = 'center';
+                    nodeEl.style.padding = '0.75rem';
+                    nodeEl.style.borderBottom = '1px solid var(--border-color)';
+                    
+                    nodeEl.innerHTML = `
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <div style="width: 8px; height: 8px; background: #00ff88; border-radius: 50%;"></div>
+                                <span style="font-family: monospace;">${node.id}</span>
+                            </div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary);">${node.type}</div>
+                        </div>
+                        <span style="color: #00ff88;">● ${node.status}</span>
+                    `;
+                    
+                    nodeList.appendChild(nodeEl);
+                });
+            }
+        }
+        
+        // Initialize
+        let ghostNet;
+        document.addEventListener('DOMContentLoaded', () => {
+            ghostNet = new GhostNet();
+            
+            // Blinking cursor
+            setInterval(() => {
+                const cursor = document.getElementById('cursor');
+                if (cursor) {
+                    cursor.style.opacity = cursor.style.opacity === '0' ? '1' : '0';
+                }
+            }, 500);
+        });
+        
+        // Global functions for buttons
+        function deployNode() {
+            if (ghostNet) ghostNet.deployNode();
+        }
+        
+        function launchAttack(type) {
+            if (ghostNet) ghostNet.launchAttack(type);
+        }
+    </script>
+</body>
+</html>
