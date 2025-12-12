@@ -1,0 +1,498 @@
+<!-- pages/tools/04-dos-tools.html -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOS Tools - HOOPSTEAM ULTIMATE</title>
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/tools.css">
+    <link rel="stylesheet" href="../../css/animations.css">
+    <style>
+        .legal-warning {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+        
+        .tool-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .risk-high { border-left: 5px solid #e74c3c; }
+        .risk-medium { border-left: 5px solid #f39c12; }
+        .risk-low { border-left: 5px solid #27ae60; }
+        
+        .attack-controls {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .stat-box {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #7f8c8d;
+            text-transform: uppercase;
+        }
+        
+        .active-attack {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="tool-header">
+            <h1>🛡️ DOS Attack Tools</h1>
+            <p>Denial of Service testing tools - Use responsibly!</p>
+        </header>
+        
+        <!-- Legal Warning -->
+        <div class="legal-warning" id="legalWarning">
+            <h3>⚠️ PERINGATAN HUKUM</h3>
+            <p>Tools DOS hanya boleh digunakan untuk:</p>
+            <ul>
+                <li>Pengujian sistem yang Anda miliki</li>
+                <li>Pengujian dengan izin tertulis</li>
+                <li>Tujuan edukasi dan penelitian</li>
+            </ul>
+            <p>Penggunaan tidak sah dapat mengakibatkan tuntutan hukum.</p>
+            <button class="btn btn-primary" onclick="acceptLegalNotice()">Saya Mengerti & Setuju</button>
+        </div>
+        
+        <!-- Tools Grid -->
+        <div class="tools-grid">
+            <!-- HTTP Flood Card -->
+            <div class="tool-card risk-high">
+                <div class="tool-header">
+                    <h3>🌐 HTTP Flood</h3>
+                    <span class="risk-badge">HIGH RISK</span>
+                </div>
+                <p>Flood target dengan HTTP requests dalam jumlah besar.</p>
+                
+                <div class="attack-controls" id="httpFloodControls">
+                    <div class="form-group">
+                        <label>Target URL:</label>
+                        <input type="url" id="httpTarget" placeholder="http://example.com" class="form-control">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Duration (seconds):</label>
+                            <input type="number" id="httpDuration" value="60" min="10" max="300" class="form-control">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Requests/sec:</label>
+                            <input type="number" id="httpRate" value="10" min="1" max="100" class="form-control">
+                        </div>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button class="btn btn-danger" onclick="startHTTPFlood()">🚀 Start Attack</button>
+                        <button class="btn btn-warning" onclick="stopHTTPFlood()" disabled id="httpStopBtn">⏹ Stop</button>
+                        <button class="btn btn-info" onclick="testHTTPTarget()">🔍 Test Target</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Slowloris Card -->
+            <div class="tool-card risk-medium">
+                <div class="tool-header">
+                    <h3>🐌 Slowloris</h3>
+                    <span class="risk-badge">MEDIUM RISK</span>
+                </div>
+                <p>Menjaga banyak koneksi HTTP terbuka dengan request lambat.</p>
+                
+                <div class="attack-controls" id="slowlorisControls">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Target Host:</label>
+                            <input type="text" id="slowlorisHost" placeholder="example.com" class="form-control">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Port:</label>
+                            <input type="number" id="slowlorisPort" value="80" class="form-control">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Sockets:</label>
+                        <input type="range" id="slowlorisSockets" min="10" max="500" value="100" class="form-control">
+                        <span id="socketCount">100 sockets</span>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button class="btn btn-warning" onclick="startSlowloris()">🚀 Start Attack</button>
+                        <button class="btn btn-secondary" onclick="stopSlowloris()" disabled id="slowlorisStopBtn">⏹ Stop</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- UDP Flood Card -->
+            <div class="tool-card risk-high">
+                <div class="tool-header">
+                    <h3>📦 UDP Flood</h3>
+                    <span class="risk-badge">HIGH RISK</span>
+                </div>
+                <p>Flood target dengan paket UDP acak.</p>
+                
+                <div class="attack-controls" id="udpFloodControls">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Target Host:</label>
+                            <input type="text" id="udpHost" placeholder="example.com" class="form-control">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Port:</label>
+                            <input type="number" id="udpPort" value="53" class="form-control">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Packets/second:</label>
+                        <input type="number" id="udpRate" value="50" min="1" max="1000" class="form-control">
+                    </div>
+                    
+                    <div class="button-group">
+                        <button class="btn btn-danger" onclick="startUDPFlood()">🚀 Start Attack</button>
+                        <button class="btn btn-warning" onclick="stopUDPFlood()" disabled id="udpStopBtn">⏹ Stop</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SYN Flood Card -->
+            <div class="tool-card risk-high">
+                <div class="tool-header">
+                    <h3>🔗 SYN Flood</h3>
+                    <span class="risk-badge">HIGH RISK</span>
+                </div>
+                <p>Flood target dengan paket TCP SYN.</p>
+                
+                <div class="attack-controls" id="synFloodControls">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Target Host:</label>
+                            <input type="text" id="synHost" placeholder="example.com" class="form-control">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Port:</label>
+                            <input type="number" id="synPort" value="80" class="form-control">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>SYN packets/second:</label>
+                        <input type="number" id="synRate" value="20" min="1" max="200" class="form-control">
+                    </div>
+                    
+                    <div class="button-group">
+                        <button class="btn btn-danger" onclick="startSYNFlood()">🚀 Start Attack</button>
+                        <button class="btn btn-warning" onclick="stopSYNFlood()" disabled id="synStopBtn">⏹ Stop</button>
+                        <button class="btn btn-info" onclick="testSYNVulnerability()">📊 Test Vulnerability</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Active Attacks Panel -->
+        <div class="tool-card">
+            <h3>🎯 Active Attacks</h3>
+            <div id="activeAttacks">
+                <p class="text-muted">No active attacks</p>
+            </div>
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="refreshActiveAttacks()">🔄 Refresh</button>
+                <button class="btn btn-danger" onclick="stopAllAttacks()">⏹ Stop All</button>
+            </div>
+        </div>
+        
+        <!-- Statistics -->
+        <div class="tool-card">
+            <h3>📊 Statistics</h3>
+            <div class="stats-grid" id="statsGrid">
+                <!-- Stats will be populated by JavaScript -->
+            </div>
+        </div>
+        
+        <!-- History Log -->
+        <div class="tool-card">
+            <h3>📝 Attack History</h3>
+            <div class="history-log" id="historyLog">
+                <!-- History will be populated by JavaScript -->
+            </div>
+            <div class="button-group">
+                <button class="btn btn-info" onclick="loadHistory()">Load History</button>
+                <button class="btn btn-warning" onclick="clearHistory()">Clear History</button>
+                <button class="btn btn-primary" onclick="generateReport()">Generate Report</button>
+            </div>
+        </div>
+        
+        <!-- Log Output -->
+        <div class="tool-card">
+            <h3>📋 Log Output</h3>
+            <div class="log-output" id="logOutput">
+                <p>System ready...</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script src="../../js/tools/tool-manager.js"></script>
+    <script src="../../js/tools/04-dos-tools/http-flood.js"></script>
+    <script src="../../js/tools/04-dos-tools/slowloris.js"></script>
+    <script src="../../js/tools/04-dos-tools/udp-flood.js"></script>
+    <script src="../../js/tools/04-dos-tools/syn-flood.js"></script>
+    
+    <script>
+        // Global variables
+        let activeHTTPFlood = null;
+        let activeSlowloris = null;
+        let activeUDPFlood = null;
+        let activeSYNFlood = null;
+        
+        // DOM Elements
+        const logOutput = document.getElementById('logOutput');
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            checkLegalNotice();
+            loadStatistics();
+            loadHistory();
+            updateActiveAttacks();
+            
+            // Set up socket count display
+            const socketSlider = document.getElementById('slowlorisSockets');
+            const socketCount = document.getElementById('socketCount');
+            socketSlider.addEventListener('input', () => {
+                socketCount.textContent = `${socketSlider.value} sockets`;
+            });
+        });
+        
+        // Legal Notice Functions
+        function checkLegalNotice() {
+            const config = dosToolsManager.config;
+            if (config.legalNoticeAccepted) {
+                document.getElementById('legalWarning').style.display = 'none';
+            }
+        }
+        
+        function acceptLegalNotice() {
+            dosToolsManager.acceptLegalNotice();
+            document.getElementById('legalWarning').style.display = 'none';
+            addLog('Legal notice accepted');
+        }
+        
+        // HTTP Flood Functions
+        async function startHTTPFlood() {
+            try {
+                const target = document.getElementById('httpTarget').value;
+                const duration = parseInt(document.getElementById('httpDuration').value);
+                const rate = parseInt(document.getElementById('httpRate').value);
+                
+                if (!target) {
+                    alert('Please enter target URL');
+                    return;
+                }
+                
+                const options = {
+                    targetUrl: target,
+                    attackDuration: duration,
+                    concurrentRequests: rate
+                };
+                
+                addLog(`Starting HTTP Flood to ${target}`);
+                
+                const result = await dosToolsManager.startAttack('http-flood', options);
+                
+                // Enable stop button
+                document.getElementById('httpStopBtn').disabled = false;
+                
+                addLog(`Attack started: ${result.attackId}`);
+                updateActiveAttacks();
+                
+            } catch (error) {
+                addLog(`Error: ${error.message}`, 'error');
+                alert(error.message);
+            }
+        }
+        
+        async function stopHTTPFlood() {
+            try {
+                const activeAttacks = dosToolsManager.getActiveAttacks();
+                const httpAttack = activeAttacks.find(a => a.tool === 'http-flood');
+                
+                if (httpAttack) {
+                    const result = await dosToolsManager.stopAttack(httpAttack.id);
+                    addLog(`HTTP Flood stopped: ${result.message}`);
+                    
+                    // Disable stop button
+                    document.getElementById('httpStopBtn').disabled = true;
+                    
+                    updateActiveAttacks();
+                    loadStatistics();
+                }
+            } catch (error) {
+                addLog(`Error stopping attack: ${error.message}`, 'error');
+            }
+        }
+        
+        async function testHTTPTarget() {
+            const target = document.getElementById('httpTarget').value;
+            if (!target) {
+                alert('Please enter target URL');
+                return;
+            }
+            
+            addLog(`Testing target: ${target}`);
+            
+            // Simulate test
+            setTimeout(() => {
+                addLog(`Target ${target} appears to be reachable`);
+                addLog('Note: Actual testing requires proper implementation');
+            }, 1000);
+        }
+        
+        // Slowloris Functions
+        async function startSlowloris() {
+            try {
+                const host = document.getElementById('slowlorisHost').value;
+                const port = parseInt(document.getElementById('slowlorisPort').value);
+                const sockets = parseInt(document.getElementById('slowlorisSockets').value);
+                
+                if (!host) {
+                    alert('Please enter target host');
+                    return;
+                }
+                
+                const options = {
+                    targetHost: host,
+                    targetPort: port,
+                    maxSockets: sockets,
+                    attackDuration: 300
+                };
+                
+                addLog(`Starting Slowloris attack on ${host}:${port}`);
+                
+                const result = await dosToolsManager.startAttack('slowloris', options);
+                
+                // Enable stop button
+                document.getElementById('slowlorisStopBtn').disabled = false;
+                
+                addLog(`Slowloris started: ${result.attackId}`);
+                updateActiveAttacks();
+                
+            } catch (error) {
+                addLog(`Error: ${error.message}`, 'error');
+                alert(error.message);
+            }
+        }
+        
+        async function stopSlowloris() {
+            try {
+                const activeAttacks = dosToolsManager.getActiveAttacks();
+                const slowlorisAttack = activeAttacks.find(a => a.tool === 'slowloris');
+                
+                if (slowlorisAttack) {
+                    const result = await dosToolsManager.stopAttack(slowlorisAttack.id);
+                    addLog(`Slowloris stopped: ${result.message}`);
+                    
+                    // Disable stop button
+                    document.getElementById('slowlorisStopBtn').disabled = true;
+                    
+                    updateActiveAttacks();
+                    loadStatistics();
+                }
+            } catch (error) {
+                addLog(`Error stopping attack: ${error.message}`, 'error');
+            }
+        }
+        
+        // UDP Flood Functions
+        async function startUDPFlood() {
+            try {
+                const host = document.getElementById('udpHost').value;
+                const port = parseInt(document.getElementById('udpPort').value);
+                const rate = parseInt(document.getElementById('udpRate').value);
+                
+                if (!host) {
+                    alert('Please enter target host');
+                    return;
+                }
+                
+                const options = {
+                    targetHost: host,
+                    targetPort: port,
+                    packetsPerSecond: rate,
+                    floodDuration: 60
+                };
+                
+                addLog(`Starting UDP Flood to ${host}:${port}`);
+                
+                const result = await dosToolsManager.startAttack('udp-flood', options);
+                
+                // Enable stop button
+                document.getElementById('udpStopBtn').disabled = false;
+                
+                addLog(`UDP Flood started: ${result.attackId}`);
+                updateActiveAttacks();
+                
+            } catch (error) {
+                addLog(`Error: ${error.message}`, 'error');
+                alert(error.message);
+            }
+        }
+        
+        async function stopUDPFlood() {
+            try {
+                const activeAttacks = dosToolsManager.getActiveAttacks();
+                const udpAttack = activeAttacks.find(a => a.tool === 'udp-flood');
+                
+                if (udpAttack) {
+                    const result = await dosToolsManager.stopAttack(udpAttack.id);
+                    addLog(`UDP Flood stopped: ${result.message}`);
+                    
+                    // Disable stop button
+                    document.getElementById('u
