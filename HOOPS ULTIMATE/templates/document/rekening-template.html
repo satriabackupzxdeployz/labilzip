@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rekening Template - HOOPSTEAM</title>
+    <style>
+        .rekening-container {
+            width: 85.6mm;
+            height: 53.98mm;
+            background: linear-gradient(135deg, #003366 0%, #0066cc 100%);
+            border-radius: 8px;
+            padding: 10px;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .bank-logo {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .chip {
+            width: 30px;
+            height: 25px;
+            background: gold;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .chip::before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 2px,
+                rgba(0,0,0,0.3) 2px,
+                rgba(0,0,0,0.3) 4px
+            );
+        }
+        
+        .card-number {
+            font-size: 16px;
+            letter-spacing: 2px;
+            text-align: center;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .card-details {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            margin-top: 10px;
+        }
+        
+        .card-holder {
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .valid-thru {
+            text-align: right;
+        }
+        
+        .valid-thru-label {
+            font-size: 6px;
+            opacity: 0.8;
+        }
+        
+        .valid-thru-date {
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .card-type {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 10px;
+            font-weight: bold;
+            opacity: 0.9;
+        }
+        
+        .hologram {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, 
+                rgba(255,255,255,0.8) 25%, 
+                transparent 25%, 
+                transparent 50%, 
+                rgba(255,255,255,0.8) 50%, 
+                rgba(255,255,255,0.8) 75%, 
+                transparent 75%);
+            background-size: 10px 10px;
+            border-radius: 50%;
+        }
+        
+        .contactless-icon {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            width: 25px;
+            height: 25px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="rekening-container">
+        <div class="bank-logo">
+            <div class="chip"></div>
+            <div>BANK NASIONAL</div>
+        </div>
+        
+        <div class="hologram"></div>
+        
+        <div class="card-number">
+            1234 5678 9012 3456
+        </div>
+        
+        <div class="card-details">
+            <div>
+                <div class="valid-thru-label">CARD HOLDER</div>
+                <div class="card-holder">JOHN DOE</div>
+            </div>
+            <div class="valid-thru">
+                <div class="valid-thru-label">VALID THRU</div>
+                <div class="valid-thru-date">01/28</div>
+            </div>
+        </div>
+        
+        <div class="card-type">PLATINUM</div>
+        
+        <div class="contactless-icon">
+            ↺
+        </div>
+    </div>
+</body>
+</html>
