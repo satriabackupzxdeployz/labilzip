@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShadowPortal • Secure Interface</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .hero-gradient {
+            background: linear-gradient(135deg, #0a0a0a 0%, #111111 50%, #1a1a1a 100%);
+        }
+        .status-online {
+            color: #10b981;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-r from-green-500 to-blue-500"></div>
+                <span class="text-xl font-bold">ShadowPortal</span>
+                <span class="text-xs px-2 py-1 bg-green-900/20 text-green-500 rounded-full">v2.5</span>
+            </div>
+            <div class="flex items-center gap-6">
+                <a href="dashboard.html" class="text-gray-400 hover:text-white"><i class="fas fa-tachometer-alt mr-2"></i>Dashboard</a>
+                <a href="#tools" class="text-gray-400 hover:text-white"><i class="fas fa-tools mr-2"></i>Tools</a>
+                <a href="#status" class="text-gray-400 hover:text-white"><i class="fas fa-server mr-2"></i>Status</a>
+                <a href="login.html" class="btn-secondary"><i class="fas fa-sign-in-alt mr-2"></i>Access</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <main class="pt-24 pb-16 hero-gradient">
+        <div class="container">
+            <div class="max-w-4xl mx-auto text-center animate-fade-in">
+                <div class="inline-flex items-center gap-3 mb-6 px-4 py-2 bg-gray-900 rounded-full">
+                    <span class="status-online"><i class="fas fa-circle"></i></span>
+                    <span class="text-sm">SYSTEM ACTIVE • ENCRYPTED CONNECTION</span>
+                </div>
+                <h1 class="text-5xl md:text-6xl font-bold mb-6">
+                    Secure <span class="text-green-500">Cyber</span> Operations
+                </h1>
+                <p class="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
+                    Advanced toolkit for network analysis, security assessment, and digital reconnaissance. 
+                    Built for professionals who need discretion and power.
+                </p>
+                <div class="flex flex-wrap gap-4 justify-center">
+                    <a href="dashboard.html" class="btn-primary px-8 py-3">
+                        <i class="fas fa-rocket mr-2"></i>Launch Dashboard
+                    </a>
+                    <a href="#features" class="btn-secondary px-8 py-3">
+                        <i class="fas fa-shield-alt mr-2"></i>View Features
+                    </a>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-20 max-w-4xl mx-auto">
+                <div class="card text-center">
+                    <div class="text-3xl font-bold text-green-500 mb-2">24+</div>
+                    <div class="text-gray-400">Security Tools</div>
+                </div>
+                <div class="card text-center">
+                    <div class="text-3xl font-bold text-blue-500 mb-2">100%</div>
+                    <div class="text-gray-400">Offline Capable</div>
+                </div>
+                <div class="card text-center">
+                    <div class="text-3xl font-bold text-purple-500 mb-2">0</div>
+                    <div class="text-gray-400">External Logs</div>
+                </div>
+                <div class="card text-center">
+                    <div class="text-3xl font-bold text-red-500 mb-2">AES-256</div>
+                    <div class="text-gray-400">Encryption</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Tools Preview -->
+    <section id="tools" class="py-16 bg-gray-900">
+        <div class="container">
+            <h2 class="text-3xl font-bold text-center mb-12">Available Modules</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Module 1 -->
+                <div class="card">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-lg bg-green-900/20 flex items-center justify-center">
+                            <i class="fas fa-search text-green-500"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">OSINT Suite</h3>
+                            <span class="text-xs text-gray-500">Passive Recon</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm">Digital footprint analysis, social media mapping, and data aggregation.</p>
+                </div>
+
+                <!-- Module 2 -->
+                <div class="card">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-lg bg-blue-900/20 flex items-center justify-center">
+                            <i class="fas fa-network-wired text-blue-500"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">Network Scanner</h3>
+                            <span class="text-xs text-gray-500">Active Analysis</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm">Port scanning, service detection, and vulnerability assessment.</p>
+                </div>
+
+                <!-- Module 3 -->
+                <div class="card">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-lg bg-purple-900/20 flex items-center justify-center">
+                            <i class="fas fa-user-secret text-purple-500"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">Privacy Tools</h3>
+                            <span class="text-xs text-gray-500">Anonymity Suite</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm">Identity protection, communication security, and trace removal.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800 py-8">
+        <div class="container text-center text-gray-500 text-sm">
+            <p>ShadowPortal v2.5 • Secure Environment</p>
+            <p class="mt-2">All operations are locally processed • No cloud dependencies</p>
+        </div>
+    </footer>
+</body>
+</html>
