@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Hacking Tools - HOOPSTEAM ULTIMATE</title>
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/tools.css">
+    <style>
+        .tool-section {
+            margin: 20px 0;
+            padding: 20px;
+            background: #1a1a1a;
+            border-radius: 10px;
+        }
+        
+        .payload-list {
+            background: #2d2d2d;
+            padding: 15px;
+            border-radius: 5px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        
+        .exploit-result {
+            background: #333;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .vulnerable {
+            color: #2ecc71;
+            font-weight: bold;
+        }
+        
+        .not-vulnerable {
+            color: #e74c3c;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        
+        .status-green { background: #2ecc71; }
+        .status-red { background: #e74c3c; }
+        .status-yellow { background: #f39c12; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌐 Web Hacking Tools</h1>
+        <p class="subtitle">Advanced web penetration testing suite</p>
+        
+        <!-- SQL Injection Tool -->
+        <div class="tool-section">
+            <h2>🗃️ SQL Injection Exploiter</h2>
+            
+            <div class="form-group">
+                <label>Target URL:</label>
+                <input type="url" id="sqlTarget" placeholder="http://vulnerable-site.com/page.php?id=1" class="form-control">
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Parameter:</label>
+                    <input type="text" id="sqlParam" placeholder="id" value="id" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <label>Value:</label>
+                    <input type="text" id="sqlValue" placeholder="1" value="1" class="form-control">
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <button class="btn btn-danger" onclick="testSQLInjection()">🔍 Test Injection</button>
+                <button class="btn btn-warning" onclick="exploitSQL()">⚡ Full Exploit</button>
+                <button class="btn btn-info" onclick="blindSQL()">👁️ Blind SQLi</button>
+                <button class="btn btn-primary" onclick="autoSQL()">🚀 Auto Exploit</button>
+            </div>
+            
+            <div class="payload-list" id="sqlPayloads">
+                <!-- Payloads will be loaded here -->
+            </div>
+            
+            <div id="sqlResults"></div>
+        </div>
+        
+        <!-- XSS Scanner -->
+        <div class="tool-section">
+            <h2>🎯 XSS Scanner & Exploiter</h2>
+            
+            <div class="form-group">
+                <label>Target URL:</label>
+                <input type="url" id="xssTarget" placeholder="http://target.com/search?q=test" class="form-control">
+            </div>
+            
+            <div class="button-group">
+                <button class="btn btn-danger" onclick="scanXSS()">🔍 Scan for XSS</button>
+                <button class="btn btn-warning" onclick="generateXSSPayloads()">📋 Generate Payloads</button>
+                <button class="btn btn-info" onclick="testXSSForms()">📝 Test Forms</button>
+                <button class="btn btn-primary" onclick="stealCookies()">🍪 Cookie Stealer</button>
+            </div>
+            
+            <div id="xssResults"></div>
+        </div>
+        
+        <!-- LFI Scanner -->
+        <div class="tool-section">
+            <h2>📁 LFI/RFI Scanner</h2>
+            
+            <div class="form-group">
+                <label>Target URL:</label>
+                <input type="url" id="lfiTarget" placeholder="http://site.com/page?file=index.php" class="form-control">
+            </div>
+            
+            <div class="form-group">
+                <label>File Parameter:</label>
+                <input type="text" id="lfiParam" placeholder="file" value="file" class="form-control">
+            </div>
+            
+            <div class="button-group">
+                <button class="btn btn-danger" onclick="scanLFI()">🔍 Scan LFI</button>
+                <button class="btn btn-warning" onclick="readEtcPasswd()">📄 Read /etc/passwd</button>
+                <button class="btn btn-info" onclick="phpFilterExploit()">🔧 PHP Filter</button>
+                <button class="btn btn-primary" onclick="tryRCE()">⚡ Try RCE</button>
+            </div>
+            
+            <div id="lfiResults"></div>
+        </div>
+        
+        <!-- CSRF Tester -->
+        <div class="tool-section">
+            <h2>🔄 CSRF Exploit Generator</h2>
+            
+            <div class="form-group">
+                <label>Action URL:</label>
+                <input type="url" id="csrfAction" placeholder="http://site.com/changepassword.php" class="form-control">
+            </div>
+            
+            <div class="form-group">
+                <label>Parameters (JSON):</label>
+                <textarea id="csrfParams" class="form-control" rows="3">{"username": "admin", "new_password": "hacked123"}</textarea>
+            </div>
+            
+            <div class="button-group">
+                <button class="btn btn-danger" onclick="generateCSRF()">🔧 Generate Exploit</button>
+                <button class="btn btn-warning" onclick="generateClickjack()">🎭 Clickjacking</button>
+                <button class="btn btn-info" onclick="passwordChangeCSRF()">🔑 Password Change</button>
+                <button class="btn btn-primary" onclick="adminCSRF()">👑 Admin Actions</button>
+            </div>
+            
+            <div id="csrfResults"></div>
+        </div>
+        
+        <!-- Results Panel -->
+        <div class="tool-section">
+            <h2>📊 Results & Exploits</h2>
+            <div id="resultsPanel">
+                <p>Results will appear here...</p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="../../js/tools/05-webhack-tools/sql-injector.js"></script>
+    <script src="../../js/tools/05-webhack-tools/xss-scanner.js"></script>
+    <script src="../../js/tools/05-webhack-tools/lfi-scanner.js"></script>
+    <script src="../../js/tools/05-webhack-tools/csrf-tester.js"></script>
+    
+    <script>
+        let sqlInjector = new SQLInjector();
+        let xssScanner = new XSSScanner();
+        let lfiScanner = new LFIScanner();
+        let csrfTester = new CSRFTester();
+        
+        // Load payloads on start
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSQLPayloads();
+        });
+        
+        // SQL Injection Functions
+        async function testSQLInjection() {
+            const target = document.getElementById('sqlTarget').value;
+            const param = document.getElementById('sqlParam').value;
+            const value = document.getElementById('sqlValue').value;
+            
+            if (!target) {
+                alert('Enter target URL');
+                return;
+            }
+            
+            const results = await sqlInjector.testInjection(target, param, value);
+            displayResults(results, 'sqlResults');
+        }
+        
+        async function exploitSQL() {
+            const target = document.getElementById('sqlTarget').value;
+            const param = document.getElementById('sqlParam').value;
+            const value = document.getElementById('sqlValue').value;
+            
+            const results = await sqlInjector.exploit(target, param, value);
+            displayExploitResults(results, 'sqlResults');
+        }
+        
+        async function blindSQL() {
+            const target = document.getElementById('sqlTarget').value;
+            const param = document.getElementById('sqlParam').value;
+            const value = document.getElementById('sqlValue').value;
+            
+            const result = await sqlInjector.blindInjection(target, param, value);
+            displayBlindResults(result, 'sqlResults');
+        }
+        
+        async function autoSQL() {
+            const target = document.getElementById('sqlTarget').value;
+            
+            const results = await sqlInjector.autoExploit(target);
+            displayAutoResults(results, 'sqlResults');
+        }
+        
+        function loadSQLPayloads() {
+            const container = document.getElementById('sqlPayloads');
+            let html = '<strong>Available Payloads:</strong><br>';
+            
+            sqlInjector.payloads.forEach((payload, index) => {
+                html += `${index + 1}. ${payload}<br>`;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        // XSS Functions
+        async function scanXSS() {
+            const target = document.getElementById('xssTarget').value;
+            
+            const results = await xssScanner.scanURL(target);
+            displayXSSResults(results, 'xssResults');
+        }
+        
+        async function generateXSSPayloads() {
+            const payloads = await xssScanner.bypassFilters();
+            let html = '<div class="payload-list"><strong>XSS Bypass Payloads:</strong><br>';
+            
+            payloads.forEach(payload => {
+                html += `<code>${escapeHTML(payload)}</code><br>`;
+            });
+            
+            html += '</div>';
+            document.getElementById('xssResults').innerHTML = html;
+        }
+        
+        async function testXSSForms() {
+            const target = document.getElementById('xssTarget').value;
+            
+            const results = await xssScanner.scanForms(target);
+            displayFormResults(results, 'xssResults');
+        }
+        
+        async function stealCookies() {
+            const target = document.getElementById('xssTarget').value;
+            
+            const payload = await xssScanner.stealCookies(target);
+            let html = `
+                <div class="exploit-result">
+                    <h4>🍪 Cookie Stealer Payload</h4>
+                    <code>${escapeHTML(payload.payload)}</code>
+                    <p><strong>Decoder:</strong> ${payload.decoder}</p>
+                </div>
+            `;
+            
+            document.getElementById('xssResults').innerHTML = html;
+        }
+        
+        // LFI Functions
+        async function scanLFI() {
+            const target = document.getElementById('lfiTarget').value;
+            const param = document.getElementById('lfiParam').value;
+            
+            const results = await lfiScanner.scanURL(target, param);
+            displayLFIResults(results, 'lfiResults');
+        }
+        
+        async function readEtcPasswd() {
+            const target = document.getElementById('lfiTarget').value;
+            const param = document.getElementById('lfiParam').value;
+            
+            const result = await lfiScanner.readFile(target, param, '/etc/passwd');
+            displayFileResult(result, 'lfiResults');
+        }
+        
+        async function phpFilterExploit() {
+            const target = document.getElementById('lfiTarget').value;
+            const param = document.getElementById('lfiParam').value;
+            
+            const result = await lfiScanner.phpFilterExploit(target, param, 'index.php');
+            displayPHPResult(result, 'lfiResults');
+        }
+        
+        async function tryRCE() {
+            const target = document.getElementById('lfiTarget').value;
+            const param = document.getElementById('lfiParam').value;
+            
+            const result = await lfiScanner.remoteCodeExecution(target, param);
+            displayRCEResult(result, 'lfiResults');
+        }
+        
+        // CSRF Functions
+        function generateCSRF() {
+            const action = document.getElementById('csrfAction').value;
+            const paramsText = document.getElementById('csrfParams').value;
+            
+            try {
+                const params = JSON.parse(paramsText);
+                const exploit = csrfTester.generateExploit(action, 'POST', params);
+                
+                let html = `
+                    <div class="exploit-result">
+                        <h4>🔄 CSRF Exploit</h4>
+                        <p><strong>Method:</strong> ${exploit.method}</p>
+                        <textarea class="form-control" rows="10">${exploit.exploit}</textarea>
+                        <button class="btn btn-sm btn-success" onclick="copyToClipboard(this)">📋 Copy</button>
+                    </div>
+                `;
+                
+                document.getElementById('csrfResults').innerHTML = html;
+                
+            } catch (e) {
+                alert('Invalid JSON: ' + e.message);
+            }
+        }
+        
+        function generateClickjack() {
+            const action = document.getElementById('csrfAction').value;
+            const paramsText = document.getElementById('csrfParams').value;
+            
+            try {
+                const params = JSON.parse(paramsText);
+                const exploit = csrfTester.generateClickjacking(action, params);
+                
+                let html = `
+                    <div class="exploit-result">
+                        <h4>🎭 Clickjacking Exploit</h4>
+                        <textarea class="form-control" rows="10">${exploit.code}</textarea>
+                        <button class="btn btn-sm btn-success" onclick="copyToClipboard(this)">📋 Copy</button>
+                    </div>
+                `;
+                
+                document.getElementById('csrfResults').innerHTML = html;
+                
+            } catch (e) {
+                alert('Invalid JSON');
+            }
+        }
+        
+        function passwordChangeCSRF() {
+            const exploit = csrfTester.generatePasswordChangeCSRF('admin', 'hacked123');
+            
+            let html = `
+                <div class="exploit-result">
+                    <h4>🔑 Password Change CSRF</h4>
+                    <textarea class="form-control" rows="10">${exploit.exploit}</textarea>
+                    <button class="btn btn-sm btn-success" onclick="copyToClipboard(this)">📋 Copy</button>
+                </div>
+            `;
+            
+            document.getElementById('csrfResults').innerHTML = html;
+        }
+        
+        function adminCSRF() {
+            const exploits = csrfTester.generateAdminActionCSRF('delete_user', '1');
+            
+            let html = '<div class="exploit-result"><h4>👑 Admin Action CSRF</h4>';
+            
+            exploits.forEach(exploit => {
+                html += `
+                    <h5>${exploit.name}</h5>
+                    <textarea class="form-control" rows="5">${exploit.exploit}</textarea>
+                    <button class="btn btn-sm btn-success" onclick="copyToClipboard(this)">📋 Copy</button>
+                    <hr>
+                `;
+            });
+            
+            html += '</div>';
+            document.getElementById('csrfResults').innerHTML = html;
+        }
+        
+        // Display Functions
+        function displayResults(results, containerId) {
+            let html = '<div class="exploit-result">';
+            html += '<h4>SQL Injection Test Results</h4>';
+            
+            let vulnerableCount = 0;
+            
+            results.forEach(result => {
+                if (result.vulnerable) {
+                    vulnerableCount++;
+                    html += `
+                        <p><span class="status-indicator status-green"></span>
+                        <strong>VULNERABLE:</strong> ${result.payload}</p>
+                        <small>Type: ${result.type} | Response Time: ${result.responseTime}ms</small><br>
+                    `;
+                } else {
+                    html += `<p><span class="status-indicator status-red"></span> ${result.payload}</p>`;
+                }
+            });
+            
+            html += `<hr><strong>Total Vulnerabilities Found:</strong> ${vulnerableCount}</div>`;
+            document.getElementById(containerId).innerHTML = html;
+        }
+        
+        function displayExploitResults(results, containerId) {
+            let html = '<div class="exploit-result"><h4>⚡ SQL Exploitation Results</h4>';
+            
+            results.forEach(result => {
+                if (result.success) {
+                    html += `
+                        <p><span class="status-indicator status-green"></span>
+                        <strong>${result.type}:</strong> ${result.result}</p>
+                    `;
+                }
+            });
+            
+            html += '</div>';
+            document.getElementById(containerId).innerHTML = html;
+        }
+        
+        function copyToClipboard(button) {
+            const textarea = button.previousElementSibling;
+            textarea.select();
+            document.execCommand('copy');
+            button.textContent = '✅ Copied!';
+            setTimeout(() => button.textContent = '📋 Copy', 2000);
+        }
+        
+        function escapeHTML(text) {
+            return text.replace(/[&<>"']/g, 
+                m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]);
+        }
+        
+        // Global results display
+        function showResults(title, content) {
+            const panel = document.getElementById('resultsPanel');
+            panel.innerHTML = `
+                <div class="exploit-result">
+                    <h4>${title}</h4>
+                    <pre>${content}</pre>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
