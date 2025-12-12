@@ -1,0 +1,33 @@
+<!-- ==============================================
+FILE: dashboard.html
+LOKASI: 📁 PS-ULTIMATE-APP/public/dashboard.html
+============================================== -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PS Ultimate Dashboard</title>
+    <!-- CSS dari folder css/ -->
+    <link rel="stylesheet" href="css/dashboard.css"> <!-- ← 📁 public/css/ -->
+    
+    <!-- JavaScript dari folder JS/ -->
+    <script src="JS/api.js"></script>      <!-- ← 📁 public/JS/api.js -->
+    <script src="JS/events.js"></script>   <!-- ← 📁 public/JS/events.js -->
+    <script src="JS/storage.js"></script>  <!-- ← 📁 public/JS/storage.js -->
+</head>
+<body>
+    <div id="dashboard">
+        <!-- Konten dashboard -->
+    </div>
+    
+    <script>
+        // JavaScript inline untuk dashboard
+        async function loadTools() {
+            const tools = await callAPI('/api/tools'); // ← Panggil API
+            displayTools(tools);
+        }
+        
+        // Load tools saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', loadTools);
+    </script>
+</body>
+</html>
