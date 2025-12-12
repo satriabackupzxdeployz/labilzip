@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KTP Template - HOOPSTEAM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background: #f0f0f0;
+            padding: 20px;
+        }
+        
+        .ktp-container {
+            width: 85.6mm;
+            height: 53.98mm;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 6px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            margin: 0 auto;
+        }
+        
+        .ktp-header {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+        
+        .ktp-header h1 {
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: #000;
+        }
+        
+        .ktp-header h2 {
+            font-size: 10px;
+            color: #333;
+        }
+        
+        .ktp-content {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .ktp-photo {
+            width: 80px;
+            height: 100px;
+            border: 1px solid #000;
+            background: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            color: #666;
+        }
+        
+        .ktp-data {
+            flex: 1;
+            font-size: 9px;
+            line-height: 1.3;
+        }
+        
+        .ktp-row {
+            display: flex;
+            margin-bottom: 2px;
+        }
+        
+        .ktp-label {
+            width: 80px;
+            font-weight: bold;
+        }
+        
+        .ktp-value {
+            flex: 1;
+        }
+        
+        .ktp-qr {
+            position: absolute;
+            bottom: 6px;
+            right: 6px;
+            width: 40px;
+            height: 40px;
+            background: #f0f0f0;
+            border: 1px dashed #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6px;
+            color: #999;
+        }
+        
+        .ktp-footer {
+            position: absolute;
+            bottom: 6px;
+            left: 90px;
+            font-size: 7px;
+            color: #666;
+        }
+        
+        .watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 40px;
+            color: rgba(255,0,0,0.1);
+            font-weight: bold;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .controls {
+            margin-top: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            max-width: 400px;
+            margin: 20px auto;
+        }
+        
+        .control-group {
+            margin-bottom: 10px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .btn-generate {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        
+        .btn-download {
+            background: #2196F3;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+        
+        .btn-print {
+            background: #FF9800;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+        
+        .security-features {
+            border-top: 1px solid #000;
+            padding-top: 5px;
+            margin-top: 5px;
+            font-size: 6px;
+            color: #666;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="ktp-container" id="ktpPreview">
+        <div class="watermark">SAMPLE</div>
+        <div class="ktp-header">
+            <h1>REPUBLIK INDONESIA</h1>
+            <h2>KARTU TANDA PENDUDUK</h2>
+        </div>
+        <div class="ktp-content">
+            <div class="ktp-photo">
+                <span>FOTO 3x4</span>
+            </div>
+            <div class="ktp-data">
+                <div class="ktp-row">
+                    <div class="ktp-label">NIK</div>
+                    <div class="ktp-value" id="previewNIK">3273010101010001</div>
+                </div>
+                <div class="ktp-row">
+                    <div class="ktp-label">Nama</div>
+                    <div class="ktp-value" id="previewNama">JOHN DOE</div>
+                </div>
+                <div class="ktp-row">
+                    <div class="ktp-label">Tempat/Tgl Lahir</div>
+                    <div class="ktp-value" id="previewTTL">JAKARTA, 01-01-1990</div>
+                </div>
+                <div class="ktp-row">
+                    <div class="ktp-label">Jenis Kelamin</div>
+                    <div class="ktp-value" id="previewGender">LAKI-LAKI</div>
+                </div>
+                <div class="ktp-row">
+                    <div class="ktp-label">Alamat</div>
+                    <div class="ktp-value" id="previewAlamat">JL. MERDEKA NO. 123</div>
+                </div>
+                <div class="ktp-row">
+                    <div class="ktp-label">RT/RW</div>
+                    <div class="ktp-value" id="previewRTRW">001/002</div>
+                </div>
+                <div class="ktp-row">
+                    <div class="ktp-label">Kel/Desa</div>
+                    <div class="ktp-value" id="previewKelurahan">MENTENG</div>
+                </div>
+                <div class="ktp-row">
+                    <div class="ktp-label">Kecamatan</div>
+                    <div class="ktp-value" id="previewKecamatan">MENTENG</div>
+                </div>
+                <div class="ktp-row">
+                    <div class="ktp-label">Agama</div>
+                    <div class="ktp-value" id="previewAgama">ISLAM</div>
+                </div>
+                <div class="ktp-row">
+                    <div class="ktp-label">Status Perkawinan</div>
+                    <div class="ktp-value" id="previewStatus">KAWIN</div>
+                </div>
+                <div class="ktp-row">
+                    <div class="ktp-label">Pekerjaan</div>
+                    <div class="ktp-value" id="previewPekerjaan">KARYAWAN SWASTA</div>
+                </div>
+            </div>
+        </div>
+        <div class="ktp-qr">QR CODE</div>
+        <div class="ktp-footer">
+            <div>Dikeluarkan oleh: Dinas Kependudukan dan Pencatatan Sipil</div>
+            <div>Berlaku Hingga: SEUMUR HIDUP</div>
+        </div>
+        <div class="security-features">
+            Dokumen ini dilengkapi dengan hologram dan microtext untuk keamanan
+        </div>
+    </div>
+    
+    <div class="controls">
+        <h2>Generator KTP</h2>
+        
+        <div class="control-group">
+            <label for="nik">NIK</label>
+            <input type="text" id="nik" value="3273010101010001">
+        </div>
+        
+        <div class="control-group">
+            <label for="nama">Nama Lengkap</label>
+            <input type="text" id="nama" value="JOHN DOE">
+        </div>
+        
+        <div class="control-group">
+            <label for="ttl">Tempat/Tanggal Lahir</label>
+            <input type="text" id="ttl" value="JAKARTA, 01-01-1990">
+        </div>
+        
+        <div class="control-group">
+            <label for="jenisKelamin">Jenis Kelamin</label>
+            <select id="jenisKelamin">
+                <option value="LAKI-LAKI">Laki-Laki</option>
+                <option value="PEREMPUAN">Perempuan</option>
+            </select>
+        </div>
+        
+        <div class="control-group">
+            <label for="alamat">Alamat</label>
+            <input type="text" id="alamat" value="JL. MERDEKA NO. 123">
+        </div>
+        
+        <div class="control-group">
+            <label for="rtrw">RT/RW</label>
+            <input type="text" id="rtrw" value="001/002">
+        </div>
+        
+        <div class="control-group">
+            <label for="kelurahan">Kelurahan/Desa</label>
+            <input type="text" id="kelurahan" value="MENTENG">
+        </div>
+        
+        <div class="control-group">
+            <label for="kecamatan">Kecamatan</label>
+            <input type="text" id="kecamatan" value="MENTENG">
+        </div>
+        
+        <div class="control-group">
+            <label for="agama">Agama</label>
+            <select id="agama">
+                <option value="ISLAM">Islam</option>
+                <option value="KRISTEN">Kristen</option>
+                <option value="KATOLIK">Katolik</option>
+                <option value="HINDU">Hindu</option>
+                <option value="BUDDHA">Buddha</option>
+                <option value="KHONGHUCU">Khonghucu</option>
+            </select>
+        </div>
+        
+        <div class="control-group">
+            <label for="status">Status Perkawinan</label>
+            <select id="status">
+                <option value="KAWIN">Kawin</option>
+                <option value="BELUM KAWIN">Belum Kawin</option>
+                <option value="CERAI HIDUP">Cerai Hidup</option>
+                <option value="CERAI MATI">Cerai Mati</option>
+            </select>
+        </div>
+        
+        <div class="control-group">
+            <label for="pekerjaan">Pekerjaan</label>
+            <input type="text" id="pekerjaan" value="KARYAWAN SWASTA">
+        </div>
+        
+        <button class="btn-generate" onclick="generateKTP()">Generate KTP</button>
+        <button class="btn-download" onclick="downloadKTP()">Download</button>
+        <button class="btn-print" onclick="printKTP()">Print</button>
+    </div>
+    
+    <script>
+        function generateKTP() {
+            document.getElementById('previewNIK').textContent = document.getElementById('nik').value;
+            document.getElementById('previewNama').textContent = document.getElementById('nama').value.toUpperCase();
+            document.getElementById('previewTTL').textContent = document.getElementById('ttl').value.toUpperCase();
+            document.getElementById('previewGender').textContent = document.getElementById('jenisKelamin').value;
+            document.getElementById('previewAlamat').textContent = document.getElementById('alamat').value.toUpperCase();
+            document.getElementById('previewRTRW').textContent = document.getElementById('rtrw').value;
+            document.getElementById('previewKelurahan').textContent = document.getElementById('kelurahan').value.toUpperCase();
+            document.getElementById('previewKecamatan').textContent = document.getElementById('kecamatan').value.toUpperCase();
+            document.getElementById('previewAgama').textContent = document.getElementById('agama').value;
+            document.getElementById('previewStatus').textContent = document.getElementById('status').value;
+            document.getElementById('previewPekerjaan').textContent = document.getElementById('pekerjaan').value.toUpperCase();
+        }
+        
+        function generateRandomKTP() {
+            const provinces = ['11', '12', '13', '14', '15', '16', '17', '18', '19', '21', '31', '32', '33', '34', '35', '36', '51', '52', '53', '61', '62', '63', '64', '65', '71', '72', '73', '74', '75', '76', '81', '82', '91', '92'];
+            const cities = {
+                '31': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44'],
+                '32': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75']
+            };
+            
+            const province = provinces[Math.floor(Math.random() * provinces.length)];
+            const city = cities[province] ? cities[province][Math.floor(Math.random() * cities[province].length)] : '01';
+            const birthDate = Math.random().toString().substr(2,6);
+            const randomNumber = Math.random().toString().substr(2,4);
+            
+            const nik = province + city + birthDate + randomNumber;
+            
+            const firstNames = ['JOHN', 'JANE', 'BUDI', 'SARI', 'AGUS', 'RINA', 'TONO', 'SITI', 'HENDRA', 'DEWI'];
+            const lastNames = ['DOE', 'SMITH', 'SANTOSO', 'WATI', 'PRASETYO', 'KURNIA', 'WIBOWO', 'NURHAYATI'];
+            
+            const nama = firstNames[Math.floor(Math.random() * firstNames.length)] + ' ' + 
+                        lastNames[Math.floor(Math.random() * lastNames.length)];
+            
+            const citiesList = ['JAKARTA', 'BANDUNG', 'SURABAYA', 'MEDAN', 'SEMARANG', 'MAKASSAR', 'PALEMBANG', 'TANGERANG'];
+            const tanggal = Math.floor(Math.random() * 28) + 1;
+            const bulan = Math.floor(Math.random() * 12) + 1;
+            const tahun = 1960 + Math.floor(Math.random() * 40);
+            
+            const ttl = citiesList[Math.floor(Math.random() * citiesList.length)] + ', ' + 
+                       tanggal.toString().padStart(2, '0') + '-' + 
+                       bulan.toString().padStart(2, '0') + '-' + 
+                       tahun;
+            
+            document.getElementById('nik').value = nik;
+            document.getElementById('nama').value = nama;
+            document.getElementById('ttl').value = ttl;
+            document.getElementById('jenisKelamin').value = Math.random() > 0.5 ? 'LAKI-LAKI' : 'PEREMPUAN';
+            document.getElementById('alamat').value = 'JL. ' + 
+                ['MERDEKA', 'SUDIRMAN', 'THAMRIN', 'GAJAH MADA', 'HAYAM WURUK'][Math.floor(Math.random() * 5)] + 
+                ' NO. ' + (Math.floor(Math.random() * 100) + 1);
+            document.getElementById('rtrw').value = 
+                Math.floor(Math.random() * 10).toString().padStart(3, '0') + '/' + 
+                Math.floor(Math.random() * 10).toString().padStart(3, '0');
+            document.getElementById('kelurahan').value = 
+                ['MENTENG', 'KEBON JERUK', 'TANAH ABANG', 'SENAYAN', 'KUNINGAN'][Math.floor(Math.random() * 5)];
+            document.getElementById('kecamatan').value = 
+                ['MENTENG', 'KEBON JERUK', 'TANAH ABANG', 'SENAYAN', 'KUNINGAN'][Math.floor(Math.random() * 5)];
+            
+            generateKTP();
+        }
+        
+        function downloadKTP() {
+            const ktpElement = document.getElementById('ktpPreview');
+            html2canvas(ktpElement).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'KTP_' + document.getElementById('nik').value + '.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        }
+        
+        function printKTP() {
+            const printContent = document.getElementById('ktpPreview').innerHTML;
+            const originalContent = document.body.innerHTML;
+            
+            document.body.innerHTML = printContent;
+            window.print();
+            document.body.innerHTML = originalContent;
+            location.reload();
+        }
+        
+        // Auto-generate on page load
+        window.onload = function() {
+            generateRandomKTP();
+            
+            // Add random button
+            const controls = document.querySelector('.controls');
+            const randomBtn = document.createElement('button');
+            randomBtn.className = 'btn-generate';
+            randomBtn.style.background = '#9C27B0';
+            randomBtn.style.marginLeft = '10px';
+            randomBtn.textContent = 'Random KTP';
+            randomBtn.onclick = generateRandomKTP;
+            
+            controls.querySelector('.btn-generate').parentNode.insertBefore(randomBtn, 
+                controls.querySelector('.btn-generate').nextSibling);
+        };
+    </script>
+    
+    <!-- Include html2canvas for download functionality -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+</body>
+</html>
