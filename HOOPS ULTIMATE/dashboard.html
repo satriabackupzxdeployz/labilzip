@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PS Ultimate - Dashboard</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <h2>PS ULTIMATE</h2>
+            </div>
+            
+            <div class="user-profile">
+                <div class="avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="user-info">
+                    <span id="username">Admin</span>
+                    <span class="role">Administrator</span>
+                </div>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="#dashboard" class="nav-item active" onclick="showSection('dashboard')">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+                <a href="#tools" class="nav-item" onclick="showSection('tools')">
+                    <i class="fas fa-tools"></i> All Tools
+                </a>
+                <a href="#network" class="nav-item" onclick="showSection('network')">
+                    <i class="fas fa-network-wired"></i> Network Tools
+                </a>
+                <a href="#osint" class="nav-item" onclick="showSection('osint')">
+                    <i class="fas fa-search"></i> OSINT Tools
+                </a>
+                <a href="#webhack" class="nav-item" onclick="showSection('webhack')">
+                    <i class="fas fa-code"></i> Web Hacking
+                </a>
+                <a href="#wifi" class="nav-item" onclick="showSection('wifi')">
+                    <i class="fas fa-wifi"></i> WiFi Tools
+                </a>
+                <a href="#scanning" class="nav-item" onclick="showSection('scanning')">
+                    <i class="fas fa-bullseye"></i> Scanning
+                </a>
+                <a href="#logs" class="nav-item" onclick="showSection('logs')">
+                    <i class="fas fa-history"></i> Activity Logs
+                </a>
+                <a href="#settings" class="nav-item" onclick="showSection('settings')">
+                    <i class="fas fa-cog"></i> Settings
+                </a>
+            </nav>
+
+            <div class="system-status">
+                <h4><i class="fas fa-server"></i> System Status</h4>
+                <div class="status-item">
+                    <span>API Server:</span>
+                    <span class="status-indicator online" id="api-status">Online</span>
+                </div>
+                <div class="status-item">
+                    <span>Tools Loaded:</span>
+                    <span class="status-count" id="tools-count">0</span>
+                </div>
+                <div class="status-item">
+                    <span>Last Scan:</span>
+                    <span id="last-scan">Never</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <!-- TOP BAR -->
+            <div class="top-bar">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="tool-search" placeholder="Search tools..." onkeyup="searchTools()">
+                </div>
+                <div class="quick-actions">
+                    <button class="btn-primary" onclick="quickAction('ip-scan')">
+                        <i class="fas fa-globe"></i> Quick IP Scan
+                    </button>
+                    <button class="btn-success" onclick="quickAction('dns-check')">
+                        <i class="fas fa-sitemap"></i> DNS Check
+                    </button>
+                    <button class="btn-warning" onclick="quickAction('port-scan')">
+                        <i class="fas fa-door-open"></i> Port Scan
+                    </button>
+                </div>
+            </div>
+
+            <!-- DASHBOARD SECTION -->
+            <div id="dashboard" class="content-section active">
+                <h1><i class="fas fa-tachometer-alt"></i> Dashboard</h1>
+                <p class="subtitle">Welcome to PS Ultimate Tools Suite</p>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #667eea;">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="total-tools">0</h3>
+                            <p>Total Tools</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #764ba2;">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="tools-used">0</h3>
+                            <p>Tools Used Today</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #f093fb;">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="scans-today">0</h3>
+                            <p>Scans Today</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #f5576c;">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="uptime">0h</h3>
+                            <p>System Uptime</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- QUICK TOOLS -->
+                <div class="section-card">
+                    <h3><i class="fas fa-bolt"></i> Quick Tools</h3>
+                    <div class="quick-tools-grid">
+                        <div class="quick-tool" onclick="runTool('ip-geolocation')">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>IP Geolocation</span>
+                        </div>
+                        <div class="quick-tool" onclick="runTool('dns-lookup')">
+                            <i class="fas fa-sitemap"></i>
+                            <span>DNS Lookup</span>
+                        </div>
+                        <div class="quick-tool" onclick="runTool('email-verifier')">
+                            <i class="fas fa-envelope"></i>
+                            <span>Email Verify</span>
+                        </div>
+                        <div class="quick-tool" onclick="runTool('phone-lookup')">
+                            <i class="fas fa-phone"></i>
+                            <span>Phone Lookup</span>
+                        </div>
+                        <div class="quick-tool" onclick="runTool('reverse-ip')">
+                            <i class="fas fa-retweet"></i>
+                            <span>Reverse IP</span>
+                        </div>
+                        <div class="quick-tool" onclick="runTool('whois')">
+                            <i class="fas fa-search"></i>
+                            <span>WHOIS Lookup</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- IP SCANNER QUICK -->
+                <div class="section-card">
+                    <h3><i class="fas fa-globe"></i> Quick IP Scanner</h3>
+                    <div class="input-group">
+                        <input type="text" id="quick-ip" placeholder="Enter IP address (e.g., 8.8.8.8)" value="8.8.8.8">
+                        <button class="btn-primary" onclick="scanIP()">
+                            <i class="fas fa-search"></i> Scan IP
+                        </button>
+                    </div>
+                    <div id="ip-result" class="result-box" style="display: none;">
+                        <!-- Results will appear here -->
+                    </div>
+                </div>
+
+                <!-- RECENT ACTIVITY -->
+                <div class="section-card">
+                    <h3><i class="fas fa-history"></i> Recent Activity</h3>
+                    <div id="activity-log" class="activity-log">
+                        <div class="activity-item">
+                            <i class="fas fa-info-circle"></i>
+                            <span>No activity yet. Start using tools!</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ALL TOOLS SECTION -->
+            <div id="tools" class="content-section">
+                <h1><i class="fas fa-tools"></i> All Tools</h1>
+                <div class="tools-container" id="all-tools-list">
+                    <!-- Tools will be loaded by JavaScript -->
+                    <div class="loading">
+                        <i class="fas fa-spinner fa-spin"></i> Loading tools...
+                    </div>
+                </div>
+            </div>
+
+            <!-- NETWORK TOOLS SECTION -->
+            <div id="network" class="content-section">
+                <h1><i class="fas fa-network-wired"></i> Network Tools</h1>
+                <div class="tools-grid" id="network-tools">
+                    <!-- Network tools will be loaded here -->
+                </div>
+            </div>
+
+            <!-- TOOL RUNNER MODAL -->
+            <div id="tool-modal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 id="modal-title">Tool Runner</h3>
+                        <span class="close" onclick="closeModal()">&times;</span>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group">
+                            <input type="text" id="tool-input" placeholder="Enter target...">
+                            <button class="btn-primary" onclick="executeTool()">
+                                <i class="fas fa-play"></i> Run Tool
+                            </button>
+                        </div>
+                        <div class="result-container">
+                            <h4>Results:</h4>
+                            <pre id="tool-output">Waiting for execution...</pre>
+                        </div>
+                        <div class="tool-info" id="tool-description">
+                            <!-- Tool description will appear here -->
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn-secondary" onclick="closeModal()">Close</button>
+                        <button class="btn-success" onclick="saveResult()">
+                            <i class="fas fa-save"></i> Save Result
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="JS/api.js"></script>
+    <script src="JS/storage.js"></script>
+    <script src="JS/logger.js"></script>
+    <script>
+        // Dashboard JavaScript
+        let currentTool = '';
+        let startTime = new Date();
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTools();
+            checkAPIStatus();
+            updateUptime();
+            
+            // Update uptime every minute
+            setInterval(updateUptime, 60000);
+            
+            // Check API status every 30 seconds
+            setInterval(checkAPIStatus, 30000);
+        });
+
+        // Show section
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Add active class to clicked nav item
+            event.target.classList.add('active');
+        }
+
+        // Load all tools
+        async function loadTools() {
+            try {
+                const response = await fetch('/api/tools');
+                const data = await response.json();
+                
+                if (data.success) {
+                    const toolsContainer = document.getElementById('all-tools-list');
+                    toolsContainer.innerHTML = '';
+                    
+                    // Update stats
+                    document.getElementById('total-tools').textContent = data.tools.length;
+                    document.getElementById('tools-count').textContent = data.tools.length;
+                    
+                    // Display tools
+                    data.tools.forEach(category => {
+                        const categoryDiv = document.createElement('div');
+                        categoryDiv.className = 'tool-category-card';
+                        categoryDiv.innerHTML = `
+                            <h3>${category.name}</h3>
+                            <div class="category-tools">
+                                ${category.tools ? category.tools.map(tool => `
+                                    <div class="tool-item" onclick="openTool('${category.name}', '${tool.name}')">
+                                        <i class="fas fa-cog"></i>
+                                        <span>${tool.name}</span>
+                                    </div>
+                                `).join('') : ''}
+                            </div>
+                        `;
+                        toolsContainer.appendChild(categoryDiv);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading tools:', error);
+            }
+        }
+
+        // Check API status
+        async function checkAPIStatus() {
+            try {
+                const response = await fetch('/api/health');
+                const data = await response.json();
+                
+                const statusElement = document.getElementById('api-status');
+                if (data.server === 'running') {
+                    statusElement.className = 'status-indicator online';
+                    statusElement.textContent = 'Online';
+                } else {
+                    statusElement.className = 'status-indicator offline';
+                    statusElement.textContent = 'Offline';
+                }
+            } catch (error) {
+                document.getElementById('api-status').className = 'status-indicator offline';
+                document.getElementById('api-status').textContent = 'Offline';
+            }
+        }
+
+        // Update uptime
+        function updateUptime() {
+            const now = new Date();
+            const diff = now - startTime;
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            document.getElementById('uptime').textContent = `${hours}h`;
+        }
+
+        // Open tool modal
+        function openTool(category, toolName) {
+            currentTool = toolName;
+            document.getElementById('modal-title').textContent = toolName;
+            document.getElementById('tool-input').placeholder = `Enter target for ${toolName}...`;
+            
+            // Set tool description
+            const descriptions = {
+                'dns-lookup': 'DNS Lookup - Get DNS records for any domain',
+                'ip-geolocation': 'IP Geolocation - Get location information for any IP address',
+                'email-verifier': 'Email Verifier - Verify email address validity',
+                'reverse-ip': 'Reverse IP - Find all domains hosted on the same IP',
+                'phone-lookup': 'Phone Lookup - Get information about phone number',
+                'whois': 'WHOIS Lookup - Get domain registration information'
+            };
+            
+            document.getElementById('tool-description').innerHTML = `
+                <p><strong>Tool:</strong> ${toolName}</p>
+                <p><strong>Category:</strong> ${category}</p>
+                <p><strong>Description:</strong> ${descriptions[toolName] || 'No description available'}</p>
+            `;
+            
+            // Show modal
+            document.getElementById('tool-modal').style.display = 'block';
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('tool-modal').style.display = 'none';
+            document.getElementById('tool-output').textContent = 'Waiting for execution...';
+        }
+
+        // Execute tool
+        async function executeTool() {
+            const input = document.getElementById('tool-input').value;
+            if (!input) {
+                alert('Please enter a target');
+                return;
+            }
+            
+            const outputElement = document.getElementById('tool-output');
+            outputElement.textContent = 'Running tool... Please wait.';
+            
+            try {
+                let result;
+                
+                // Call appropriate API based on tool
+                switch(currentTool) {
+                    case 'ip-geolocation':
+                        result = await fetch(`/api/ip/${input}`);
+                        break;
+                    case 'dns-lookup':
+                        result = await fetch(`/api/dns/${input}`);
+                        break;
+                    case 'email-verifier':
+                        result = await fetch(`/api/email/${input}`);
+                        break;
+                    case 'reverse-ip':
+                        result = await fetch(`/api/reverseip/${input}`);
+                        break;
+                    case 'phone-lookup':
+                        result = await fetch(`/api/phone/${input}`);
+                        break;
+                    default:
+                        result = await fetch(`/api/tools/run/js`, {
+                            method: 'POST',
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify({
+                                toolPath: `/tools/${currentTool}.js`,
+                                args: input
+                            })
+                        });
+                }
+                
+                const data = await result.json();
+                outputElement.textContent = JSON.stringify(data, null, 2);
+                
+                // Log activity
+                logActivity(currentTool, input, 'success');
+                
+            } catch (error) {
+                outputElement.textContent = `Error: ${error.message}`;
+                logActivity(currentTool, input, 'error');
+            }
+        }
+
+        // Quick tools
+        function runTool(toolName) {
+            const target = prompt(`Enter target for ${toolName}:`);
+            if (target) {
+                openTool('quick', toolName);
+                document.getElementById('tool-input').value = target;
+                setTimeout(executeTool, 500);
+            }
+        }
+
+        // Quick IP scan
+        async functio
