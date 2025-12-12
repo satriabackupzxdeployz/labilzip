@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Access • ShadowPortal</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .login-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a0a0a 0%, #111111 100%);
+        }
+        .security-indicator {
+            border-left: 4px solid #10b981;
+        }
+    </style>
+</head>
+<body class="login-container">
+    <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="w-full max-w-md">
+            <!-- Security Status -->
+            <div class="security-indicator bg-gray-900 p-4 rounded-r-lg mb-8">
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-shield-alt text-green-500 text-xl"></i>
+                    <div>
+                        <div class="font-bold">Secure Session</div>
+                        <div class="text-sm text-gray-400">End-to-end encrypted</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Login Card -->
+            <div class="card animate-fade-in">
+                <div class="text-center mb-8">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-green-500 to-blue-500 flex items-center justify-center">
+                        <i class="fas fa-lock text-white text-2xl"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold">Secure Access</h1>
+                    <p class="text-gray-400 mt-2">Enter your credentials to continue</p>
+                </div>
+
+                <form id="loginForm">
+                    <div class="mb-6">
+                        <label class="block text-sm text-gray-400 mb-2">
+                            <i class="fas fa-user mr-2"></i>Access Key
+                        </label>
+                        <input type="text" class="form-input" placeholder="Enter access key" required>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-sm text-gray-400 mb-2">
+                            <i class="fas fa-key mr-2"></i>Passphrase
+                        </label>
+                        <div class="relative">
+                            <input type="password" id="password" class="form-input pr-10" placeholder="Enter passphrase" required>
+                            <button type="button" onclick="togglePassword()" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                                <i id="eyeIcon" class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center mb-6">
+                        <input type="checkbox" id="secure" class="mr-3">
+                        <label for="secure" class="text-sm text-gray-400">Secure session (30 min)</label>
+                    </div>
+
+                    <button type="submit" class="btn-primary w-full py-3">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Authenticate
+                    </button>
+
+                    <div class="text-center mt-6 text-sm text-gray-500">
+                        <i class="fas fa-info-circle mr-2"></i>
+                        All login attempts are logged
+                    </div>
+                </form>
+            </div>
+
+            <!-- Security Notes -->
+            <div class="mt-6 text-xs text-gray-500 text-center">
+                <p>• Connection encrypted with AES-256</p>
+                <p>• No data stored externally</p>
+                <p>• Session automatically terminates after inactivity</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword() {
+            const password = document.getElementById('password');
+            const icon = document.getElementById('eyeIcon');
+            if (password.type === 'password') {
+                password.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                password.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Add authentication logic here
+            window.location.href = 'dashboard.html';
+        });
+    </script>
+</body>
+</html>
