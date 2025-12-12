@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STNK Template - HOOPSTEAM</title>
+    <style>
+        .stnk-container {
+            width: 148mm;
+            height: 105mm;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f8ff 100%);
+            border: 2px solid #0066cc;
+            padding: 10px;
+            font-family: 'Arial', sans-serif;
+            position: relative;
+        }
+        
+        .stnk-header {
+            text-align: center;
+            background: #0066cc;
+            color: white;
+            padding: 5px;
+            margin-bottom: 10px;
+            border-radius: 3px;
+        }
+        
+        .stnk-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            font-size: 10px;
+        }
+        
+        .stnk-section {
+            border: 1px solid #ccc;
+            padding: 5px;
+            border-radius: 3px;
+        }
+        
+        .section-title {
+            background: #e6f2ff;
+            padding: 2px 5px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            border-radius: 2px;
+        }
+        
+        .data-row {
+            display: flex;
+            margin-bottom: 2px;
+        }
+        
+        .data-label {
+            width: 100px;
+            color: #666;
+        }
+        
+        .data-value {
+            flex: 1;
+            font-weight: bold;
+        }
+        
+        .stnk-photo {
+            grid-column: 2;
+            grid-row: 1 / span 3;
+            border: 1px solid #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f8f8;
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .barcode-area {
+            grid-column: 1 / span 2;
+            text-align: center;
+            padding: 10px;
+            border-top: 2px dashed #ccc;
+            margin-top: 10px;
+        }
+        
+        .barcode {
+            display: inline-block;
+            background: #333;
+            height: 40px;
+            width: 200px;
+            margin: 5px 0;
+        }
+        
+        .watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 60px;
+            color: rgba(0,102,204,0.1);
+            font-weight: bold;
+            z-index: -1;
+        }
+        
+        .security-strip {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 20px;
+            height: 100%;
+            background: repeating-linear-gradient(
+                45deg,
+                #0066cc,
+                #0066cc 10px,
+                #ffffff 10px,
+                #ffffff 20px
+            );
+        }
+    </style>
+</head>
+<body>
+    <div class="stnk-container">
+        <div class="watermark">STNK</div>
+        <div class="security-strip"></div>
+        
+        <div class="stnk-header">
+            <h2 style="margin: 0; font-size: 14px;">SURAT TANDA NOMOR KENDARAAN BERMOTOR</h2>
+            <div style="font-size: 10px;">REPUBLIK INDONESIA</div>
+        </div>
+        
+        <div class="stnk-grid">
+            <div class="stnk-section">
+                <div class="section-title">DATA KENDARAAN</div>
+                <div class="data-row">
+                    <div class="data-label">No. Registrasi</div>
+                    <div class="data-value">B 1234 ABC</div>
+                </div>
+                <div class="data-row">
+                    <div class="data-label">Nama Pemilik</div>
+                    <div class="data-value">JOHN DOE</div>
+                </div>
+                <div class="data-row">
+                    <div class="data-label">Alamat</div>
+                    <div class="data-value">JL. MERDEKA NO. 123, JAKARTA</div>
+                </div>
+                <div class="data-row">
+                    <div class="data-label">Merk/Type</div>
+                    <div class="data-value">TOYOTA AVANZA 1.3 G</div>
+                </div>
+                <div class="data-row">
+                    <div class="data-label">Tahun Pembuatan</div>
+                    <div class="data-value">2020</div>
+                </div>
+                <div class="data-row">
+                    <div class="data-label">Warna</div>
+                    <div class="data-value">PUTIH</div>
+                </div>
+            </div>
+            
+            <div class="stnk-photo">
+                <div>FOTO KENDARAAN<br>100x150px</div>
+            </div>
+            
+            <div class="stnk-section">
+                <div class="section-title">DATA PEMILIK</div>
+                <div class="data-row">
+                    <div class="data-label">No. KTP</div>
+                    <div class="data-value">3273010101010001</div>
+                </div>
+                <div class="data-row">
+                    <div class="data-label">No. Telp</div>
+                    <div class="data-value">081234567890</div>
+                </div>
+                <div class="data-row">
+                    <div class="data-label">Pekerjaan</div>
+                    <div class="data-value">KARYAWAN SWASTA</div>
+                </div>
+            </div>
+            
+            <div class="stnk-section">
+                <div class="section-title">DATA REGISTRASI</div>
+                <div class="data-row">
+                    <div class="data-label">Masa Berlaku</div>
+                    <div class="data-value">01 JAN 2023 - 01 JAN 2024</div>
+                </div>
+                <div class="data-row">
+                    <div class="data-label">Lokasi Terbit</div>
+                    <div class="data-value">SAMSAT JAKARTA PUSAT</div>
+                </div>
+                <div class="data-row">
+                    <div class="data-label">No. Rangka</div>
+                    <div class="data-value">MHKA581GJJ1234567</div>
+                </div>
+                <div class="data-row">
+                    <div class="data-label">No. Mesin</div>
+                    <div class="data-value">1NR1234567</div>
+                </div>
+            </div>
+            
+            <div class="barcode-area">
+                <div style="font-weight: bold; margin-bottom: 5px;">KODE BAR</div>
+                <div class="barcode"></div>
+                <div style="font-size: 9px; color: #666;">Scan untuk verifikasi keaslian</div>
+            </div>
+        </div>
+        
+        <div style="position: absolute; bottom: 10px; right: 10px; font-size: 8px; color: #999;">
+            Dokumen resmi - Dilarang menggandakan tanpa izin
+        </div>
+    </div>
+</body>
+</html>
