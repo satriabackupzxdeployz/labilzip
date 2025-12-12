@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diploma Template - HOOPSTEAM</title>
+    <style>
+        .diploma-container {
+            width: 297mm;
+            height: 210mm;
+            background: #fffaf0;
+            border: 20px solid #8b4513;
+            padding: 50px;
+            font-family: 'Times New Roman', serif;
+            position: relative;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255,255,255,0.1) 1px, transparent 1px),
+                radial-gradient(circle at 90% 80%, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 100px 100px;
+        }
+        
+        .diploma-header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #8b4513;
+            padding-bottom: 20px;
+        }
+        
+        .diploma-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #8b4513;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+        }
+        
+        .diploma-subtitle {
+            font-size: 18px;
+            color: #654321;
+            font-style: italic;
+        }
+        
+        .diploma-content {
+            text-align: center;
+            margin: 40px 0;
+            font-size: 16px;
+            line-height: 2;
+        }
+        
+        .diploma-name {
+            font-size: 32px;
+            font-weight: bold;
+            color: #000;
+            margin: 20px 0;
+            text-decoration: underline;
+            text-decoration-color: #8b4513;
+        }
+        
+        .diploma-details {
+            margin: 30px 0;
+            text-align: left;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .detail-row {
+            display: flex;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .detail-label {
+            width: 200px;
+            font-weight: bold;
+        }
+        
+        .detail-value {
+            flex: 1;
+            border-bottom: 1px dotted #000;
+        }
+        
+        .diploma-signatures {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 80px;
+        }
+        
+        .signature-box {
+            text-align: center;
+        }
+        
+        .signature-line {
+            width: 200px;
+            border-top: 2px solid #000;
+            margin: 10px auto;
+            padding-top: 5px;
+        }
+        
+        .diploma-seal {
+            position: absolute;
+            top: 50%;
+            right: 50px;
+            width: 150px;
+            height: 150px;
+            border: 5px double #8b4513;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 12px;
+            font-weight: bold;
+            color: #8b4513;
+            background: rgba(255,255,255,0.9);
+        }
+        
+        .gold-border {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 2px solid #ffd700;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="diploma-container">
+        <div class="gold-border"></div>
+        
+        <div class="diploma-header">
+            <div class="diploma-title">IJAZAH SARJANA</div>
+            <div class="diploma-subtitle">DIPLOMA OF BACHELOR DEGREE</div>
+            <div style="font-size: 14px; color: #666;">
+                Nomor: 001/S1/VI/2023/UNIV-PT
+            </div>
+        </div>
+        
+        <div class="diploma-content">
+            <p>Dengan ini menyatakan bahwa:</p>
+            
+            <div class="diploma-name">Muhammad reza</div>
+            
+            <p>Telah menyelesaikan studi dan lulus ujian dengan memuaskan dalam program:</p>
+            
+            <div style="font-size: 20px; font-weight: bold; color: #8b4513; margin: 20px 0;">
+                SARJANA TEKNIK INFORMATIKA
+            </div>
+            
+            <p>Dengan predikat: <strong>CUMLAUDE</strong> (IPK: 3.75)</p>
+        </div>
+        
+        <div class="diploma-details">
+            <div class="detail-row">
+                <div class="detail-label">Tempat/Tanggal Lahir</div>
+                <div class="detail-value">Jakarta, 01 Januari 1990</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Nomor Induk Mahasiswa</div>
+                <div class="detail-value">20180801345</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Program Studi</div>
+                <div class="detail-value">Teknik Informatika</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Fakultas</div>
+                <div class="detail-value">Ilmu Komputer</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Tanggal Yudisium</div>
+                <div class="detail-value">15 Juni 2023</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Tanggal Wisuda</div>
+                <div class="detail-value">30 Juni 2023</div>
+            </div>
+        </div>
+        
+        <div class="diploma-seal">
+            UNIVERSITAS<br>
+            PRESTASI TINGGI<br>
+            <div style="font-size: 10px; margin-top: 5px;">LEGAL SEAL</div>
+        </div>
+        
+        <div class="diploma-signatures">
+            <div class="signature-box">
+                <div>Ketua Senat Universitas</div>
+                <div class="signature-line"></div>
+                <div>Prof. Dr. Ahmad Santoso, M.Sc.</div>
+                <div>NIP. 196512121987011001</div>
+            </div>
+            
+            <div class="signature-box">
+                <div>Rektor</div>
+                <div class="signature-line"></div>
+                <div>Prof. Dr. Maria Wulandari, Ph.D.</div>
+                <div>NIP. 197003151995032001</div>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px; font-size: 12px; color: #666;">
+            Ijazah ini sah dan diterbitkan sesuai dengan peraturan perundang-undangan yang berlaku
+        </div>
+    </div>
+</body>
+</html>
