@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KK Template - HOOPSTEAM</title>
+    <style>
+        .kk-container {
+            width: 210mm;
+            height: 297mm;
+            background: white;
+            border: 1px solid #000;
+            padding: 20px;
+            font-family: 'Times New Roman', serif;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .kk-header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+        }
+        
+        .kk-header h1 {
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .kk-header h2 {
+            font-size: 16px;
+            font-weight: normal;
+        }
+        
+        .kk-data {
+            margin-bottom: 20px;
+        }
+        
+        .data-row {
+            display: flex;
+            margin-bottom: 5px;
+            font-size: 12px;
+        }
+        
+        .data-label {
+            width: 200px;
+            font-weight: bold;
+        }
+        
+        .data-value {
+            flex: 1;
+            border-bottom: 1px dotted #000;
+        }
+        
+        .kk-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 11px;
+        }
+        
+        .kk-table th, .kk-table td {
+            border: 1px solid #000;
+            padding: 5px;
+            text-align: center;
+        }
+        
+        .kk-table th {
+            background: #f0f0f0;
+            font-weight: bold;
+        }
+        
+        .stamp-area {
+            margin-top: 50px;
+            text-align: center;
+        }
+        
+        .stamp {
+            display: inline-block;
+            border: 2px solid #000;
+            padding: 20px;
+            border-radius: 50%;
+            font-size: 12px;
+            text-align: center;
+        }
+        
+        .signature {
+            margin-top: 30px;
+            text-align: right;
+        }
+        
+        .signature-line {
+            display: inline-block;
+            width: 200px;
+            border-top: 1px solid #000;
+            text-align: center;
+            padding-top: 5px;
+        }
+        
+        .watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 80px;
+            color: rgba(255,0,0,0.1);
+            font-weight: bold;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <div class="kk-container">
+        <div class="watermark">CONTOH</div>
+        
+        <div class="kk-header">
+            <h1>PEMERINTAH REPUBLIK INDONESIA</h1>
+            <h2>KARTU KELUARGA</h2>
+            <h3>Nomor : 3273010101010001</h3>
+        </div>
+        
+        <div class="kk-data">
+            <div class="data-row">
+                <div class="data-label">Nama Kepala Keluarga</div>
+                <div class="data-value">JOHN DOE</div>
+            </div>
+            <div class="data-row">
+                <div class="data-label">Alamat</div>
+                <div class="data-value">JL. MERDEKA NO. 123 RT 001 RW 002</div>
+            </div>
+            <div class="data-row">
+                <div class="data-label">Desa/Kelurahan</div>
+                <div class="data-value">MENTENG</div>
+            </div>
+            <div class="data-row">
+                <div class="data-label">Kecamatan</div>
+                <div class="data-value">MENTENG</div>
+            </div>
+            <div class="data-row">
+                <div class="data-label">Kabupaten/Kota</div>
+                <div class="data-value">JAKARTA PUSAT</div>
+            </div>
+            <div class="data-row">
+                <div class="data-label">Kode Pos</div>
+                <div class="data-value">10310</div>
+            </div>
+            <div class="data-row">
+                <div class="data-label">Provinsi</div>
+                <div class="data-value">DKI JAKARTA</div>
+            </div>
+        </div>
+        
+        <table class="kk-table">
+            <thead>
+                <tr>
+                    <th rowspan="2">No</th>
+                    <th rowspan="2">Nama Lengkap</th>
+                    <th rowspan="2">NIK</th>
+                    <th rowspan="2">Jenis Kelamin</th>
+                    <th rowspan="2">Tempat Lahir</th>
+                    <th rowspan="2">Tanggal Lahir</th>
+                    <th rowspan="2">Agama</th>
+                    <th rowspan="2">Pendidikan</th>
+                    <th rowspan="2">Pekerjaan</th>
+                    <th colspan="2">Status Perkawinan</th>
+                    <th rowspan="2">Status Hubungan</th>
+                </tr>
+                <tr>
+                    <th>Status</th>
+                    <th>Tanggal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>JOHN DOE</td>
+                    <td>3273010101010001</td>
+                    <td>LAKI-LAKI</td>
+                    <td>JAKARTA</td>
+                    <td>01-01-1990</td>
+                    <td>ISLAM</td>
+                    <td>S1</td>
+                    <td>KARYAWAN SWASTA</td>
+                    <td>KAWIN</td>
+                    <td>01-01-2015</td>
+                    <td>KEPALA KELUARGA</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>JANE DOE</td>
+                    <td>3273010101010002</td>
+                    <td>PEREMPUAN</td>
+                    <td>BANDUNG</td>
+                    <td>15-05-1992</td>
+                    <td>ISLAM</td>
+                    <td>S1</td>
+                    <td>IBU RUMAH TANGGA</td>
+                    <td>KAWIN</td>
+                    <td>01-01-2015</td>
+                    <td>ISTRI</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>MICHAEL DOE</td>
+                    <td>3273010101010003</td>
+                    <td>LAKI-LAKI</td>
+                    <td>JAKARTA</td>
+                    <td>10-10-2016</td>
+                    <td>ISLAM</td>
+                    <td>SD</td>
+                    <td>PELAJAR</td>
+                    <td>BELUM KAWIN</td>
+                    <td>-</td>
+                    <td>ANAK</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="stamp-area">
+            <div class="stamp">
+                CAP DAN<br>
+                TANDA TANGAN<br>
+                KEPALA DINAS
+            </div>
+        </div>
+        
+        <div class="signature">
+            <div class="signature-line">
+                <strong>Kepala Dinas Kependudukan</strong><br>
+                <em>Dokumen Resmi Pemerintah</em>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
